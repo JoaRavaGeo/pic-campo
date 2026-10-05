@@ -1898,6 +1898,107 @@ const Importar = {
   },
 };
 
+/* ============ EXIF: escribir y leer la ubicación GPS en fotos JPEG ============ */
+const Exif = {
+  ascii: s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\x20-\x7e]/g, '?'),
+  /* ---- escritura ---- */
+  _ifd(entries, base) { // entries: [{tag,type,count,bytes}] → Uint8Array del IFD + datos fuera de línea
+    entries = entries.slice().sort((a, b) => a.tag - b.tag);
+    const n = entries.length, head = 2 + 12 * n + 4;
+    let extra = 0; for (const e of entries) if (e.bytes.length > 4) extra += e.bytes.length + (e.bytes.length & 1);
+    const out = new Uint8Array(head + extra), dv = new DataView(out.buffer);
+    dv.setUint16(0, n, true); let p = 2, d = head;
+    for (const e of entries) {
+      dv.setUint16(p, e.tag, true); dv.setUint16(p + 2, e.type, true); dv.setUint32(p + 4, e.count, true);
+      if (e.bytes.length <= 4) out.set(e.bytes, p + 8);
+      else { dv.setUint32(p + 8, base + d, true); out.set(e.bytes, d); d += e.bytes.length + (e.bytes.length & 1); }
+      p += 12;
+    }
+    dv.setUint32(p, 0, true);
+    return out;
+  },
+  _asc(tag, s) { const b = new TextEncoder().encode(this.ascii(s) + '\0'); return { tag, type: 2, count: b.length, bytes: b }; },
+  _rat(tag, vals) { const b = new Uint8Array(8 * vals.length), dv = new DataView(b.buffer); vals.forEach(([n, d], i) => { dv.setUint32(i * 8, n, true); dv.setUint32(i * 8 + 4, d, true); }); return { tag, type: 5, count: vals.length, bytes: b }; },
+  _long(tag, v) { const b = new Uint8Array(4); new DataView(b.buffer).setUint32(0, v, true); return { tag, type: 4, count: 1, bytes: b }; },
+  _byte(tag, arr) { return { tag, type: 1, count: arr.length, bytes: new Uint8Array(arr) }; },
+  _dms(v) { v = Math.abs(v); const d = Math.floor(v), mf = (v - d) * 60, m = Math.floor(mf), s = (mf - m) * 60; return [[d, 1], [m, 1], [Math.round(s * 10000), 10000]]; },
+  tiff({ lat, lon, alt, acc, fecha, desc }) {
+    const fl = String(fecha || nowISO()); const local = fl.slice(0, 10).replace(/-/g, ':') + ' ' + fl.slice(11, 19), off = fl.slice(19, 25) || '-03:00';
+    const gps = [];
+    if (lat != null && lon != null) {
+      const u = new Date(fl);
+      gps.push(this._byte(0x0000, [2, 3, 0, 0]), this._asc(0x0001, lat < 0 ? 'S' : 'N'), this._rat(0x0002, this._dms(lat)), this._asc(0x0003, lon < 0 ? 'W' : 'E'), this._rat(0x0004, this._dms(lon)),
+        this._asc(0x0012, 'WGS-84'), this._rat(0x0007, [[u.getUTCHours(), 1], [u.getUTCMinutes(), 1], [u.getUTCSeconds(), 1]]),
+        this._asc(0x001D, u.getUTCFullYear() + ':' + pad(u.getUTCMonth() + 1) + ':' + pad(u.getUTCDate())));
+      if (alt != null && isFinite(alt)) gps.push(this._byte(0x0005, [alt < 0 ? 1 : 0]), this._rat(0x0006, [[Math.round(Math.abs(alt) * 10), 10]]));
+      if (acc != null && isFinite(acc)) gps.push(this._rat(0x001F, [[Math.round(acc * 10), 10]]));
+    }
+    const exif = [this._asc(0x9003, local), this._asc(0x9004, local), this._asc(0x9011, off)];
+    const ifd0 = e => [this._asc(0x0131, 'PIC Campo ' + APP_VERSION), this._asc(0x0132, local), ...(desc ? [this._asc(0x010E, desc)] : []), this._long(0x8769, e[0]), ...(gps.length ? [this._long(0x8825, e[1])] : [])];
+    const l0 = this._ifd(ifd0([0, 0]), 8).length;
+    const exifB = this._ifd(exif, 8 + l0);
+    const gpsOff = 8 + l0 + exifB.length;
+    const i0 = this._ifd(ifd0([8 + l0, gpsOff]), 8);
+    const gpsB = gps.length ? this._ifd(gps, gpsOff) : new Uint8Array(0);
+    const out = new Uint8Array(8 + i0.length + exifB.length + gpsB.length);
+    out.set([0x49, 0x49, 0x2A, 0x00, 0x08, 0x00, 0x00, 0x00]); out.set(i0, 8); out.set(exifB, 8 + i0.length); out.set(gpsB, gpsOff);
+    return out;
+  },
+  /** JPEG con bloque EXIF nuevo (quita EXIF previo). info: {lat, lon, alt, acc, fecha, desc} */
+  async conGPS(blob, info) {
+    const src = new Uint8Array(await blob.arrayBuffer());
+    if (src[0] !== 0xFF || src[1] !== 0xD8) return blob;
+    const segs = []; let i = 2;
+    while (i + 4 <= src.length) {
+      if (src[i] !== 0xFF) return blob;
+      const mk = src[i + 1];
+      if (mk === 0xDA) { segs.push(src.subarray(i)); break; }
+      const len = (src[i + 2] << 8) | src[i + 3], seg = src.subarray(i, i + 2 + len);
+      const esExif = mk === 0xE1 && seg[4] === 0x45 && seg[5] === 0x78 && seg[6] === 0x69 && seg[7] === 0x66;
+      if (!esExif) segs.push(seg);
+      i += 2 + len;
+    }
+    const t = this.tiff(info), L = 2 + 6 + t.length;
+    if (L > 65535) return blob;
+    const app1 = new Uint8Array(4 + 6 + t.length);
+    app1.set([0xFF, 0xE1, L >> 8, L & 255, 0x45, 0x78, 0x69, 0x66, 0, 0]); app1.set(t, 10);
+    return new Blob([new Uint8Array([0xFF, 0xD8]), app1, ...segs], { type: 'image/jpeg' });
+  },
+  /* ---- lectura (fotos de la galería sacadas con la cámara del celu) ---- */
+  async leerGPS(file) {
+    try {
+      const buf = await file.slice(0, 256 * 1024).arrayBuffer(), dv = new DataView(buf);
+      if (dv.getUint16(0) !== 0xFFD8) return null;
+      let i = 2;
+      while (i + 4 < buf.byteLength) {
+        const mk = dv.getUint16(i), len = dv.getUint16(i + 2);
+        if (mk === 0xFFE1 && dv.getUint32(i + 4) === 0x45786966) return this._tiffGPS(dv, i + 10);
+        if (mk === 0xFFDA) break;
+        i += 2 + len;
+      }
+    } catch (e) { }
+    return null;
+  },
+  _tiffGPS(dv, T) {
+    const le = dv.getUint16(T) === 0x4949, u16 = o => dv.getUint16(T + o, le), u32 = o => dv.getUint32(T + o, le);
+    const ifd = o => { const n = u16(o), r = {}; for (let k = 0; k < n; k++) { const e = o + 2 + 12 * k; r[u16(e)] = { type: u16(e + 2), count: u32(e + 4), voff: e + 8, ptr: u32(e + 8) }; } return r; };
+    const rats = (e) => { const out = []; for (let k = 0; k < e.count; k++) out.push(u32(e.ptr + 8 * k) / (u32(e.ptr + 8 * k + 4) || 1)); return out; };
+    const asc = e => { let s = ''; const base = e.count > 4 ? e.ptr : e.voff; for (let k = 0; k < e.count; k++) { const c = dv.getUint8(T + base + k); if (!c) break; s += String.fromCharCode(c); } return s; };
+    const i0 = ifd(u32(4));
+    if (!i0[0x8825]) return null;
+    const g = ifd(i0[0x8825].ptr);
+    if (!g[2] || !g[4]) return null;
+    const dd = a => a[0] + a[1] / 60 + a[2] / 3600;
+    let lat = dd(rats(g[2])), lon = dd(rats(g[4]));
+    if (g[1] && asc(g[1]) === 'S') lat = -lat; if (g[3] && asc(g[3]) === 'W') lon = -lon;
+    if (!lat && !lon) return null;
+    const alt = g[6] ? rats(g[6])[0] * (g[5] && dv.getUint8(T + g[5].voff) === 1 ? -1 : 1) : null;
+    let fecha = null;
+    if (i0[0x8769]) { const ex = ifd(i0[0x8769].ptr); if (ex[0x9003]) { const s = asc(ex[0x9003]); const m = s.match(/(\d{4}):(\d\d):(\d\d) (\d\d):(\d\d):(\d\d)/); if (m) fecha = m[1] + '-' + m[2] + '-' + m[3] + 'T' + m[4] + ':' + m[5] + ':' + m[6] + (ex[0x9011] ? asc(ex[0x9011]) : ''); } }
+    return { lat, lon, alt, fecha };
+  },
+};
+
 /* ============ Mediciones: conversiones ============ */
 const Med = {
   toGeo: m => m.ref === 'geo' ? m.az : mod360(m.az + (m.dec ?? Number(Settings.get('declinacion')))),
@@ -2010,15 +2111,32 @@ const Libreta = {
       }
     };
     renderMedia();
-    const addFotos = async files => {
+    // Ubicación de cada foto: GPS al momento de sacarla > ubicación guardada en la propia foto > estación
+    let fixAlTocar = null;
+    $('#ed-cam', el).closest('label').addEventListener('click', () => { fixAlTocar = Geo.pos && Date.now() - Geo.pos.t < 60000 ? Object.assign({}, Geo.pos) : null; if (!Geo.on) Geo.start(); });
+    const addFotos = async (files, camara) => {
+      let sinGps = 0;
       for (const f of files) {
-        try { const blob = await comprimirImagen(f); const p = Geo.pos && Date.now() - Geo.pos.t < 30000 ? Geo.pos : null; await DB.put('media', { id: uid(), estacionId: e.id, tipo: 'foto', blob, fecha: nowISO(), nota: '', lat: p ? p.lat : e.lat, lon: p ? p.lon : e.lon }); }
-        catch (err) { console.error(err); toast('No pude guardar una foto'); }
+        try {
+          const exifPos = await Exif.leerGPS(f);
+          const blob = await comprimirImagen(f);
+          const fresco = Geo.pos && Date.now() - Geo.pos.t < 60000 ? Geo.pos : null;
+          let pos = null, origen = 'estacion', fecha = nowISO();
+          if (camara && (fresco || fixAlTocar)) { pos = fresco || fixAlTocar; origen = 'gps'; }
+          else if (exifPos) { pos = exifPos; origen = 'foto'; if (exifPos.fecha) fecha = exifPos.fecha; }
+          else if (e.lat != null) pos = { lat: e.lat, lon: e.lon, acc: e.acc, alt: e.alt };
+          if (origen === 'estacion') sinGps++;
+          const m = { id: uid(), estacionId: e.id, tipo: 'foto', blob, fecha, nota: '', lat: pos ? pos.lat : null, lon: pos ? pos.lon : null, acc: pos && pos.acc != null ? Math.round(pos.acc) : null, alt: pos && pos.alt != null ? pos.alt : null, origen };
+          await DB.put('media', m);
+          if (camara && origen === 'estacion') Geo.una(60000).then(async p => { if (p && p.acc < 60) { Object.assign(m, { lat: p.lat, lon: p.lon, acc: Math.round(p.acc), alt: p.alt, origen: 'gps' }); await DB.put('media', m); } });
+        } catch (err) { console.error(err); toast('No pude guardar una foto'); }
       }
+      fixAlTocar = null;
+      if (sinGps) toast(sinGps === 1 ? 'La foto quedó con la ubicación de la estación (sin GPS en ese momento)' : sinGps + ' fotos quedaron con la ubicación de la estación', 3500);
       renderMedia();
     };
-    $('#ed-cam', el).onchange = ev => { addFotos([...ev.target.files]); ev.target.value = ''; };
-    $('#ed-gal', el).onchange = ev => { addFotos([...ev.target.files]); ev.target.value = ''; };
+    $('#ed-cam', el).onchange = ev => { addFotos([...ev.target.files], true); ev.target.value = ''; };
+    $('#ed-gal', el).onchange = ev => { addFotos([...ev.target.files], false); ev.target.value = ''; };
     $('#ed-croq-n', el).onclick = () => Croquis.abrir(e, null, renderMedia);
     $('#ed-med-m', el).onclick = () => this.medManual(e, renderMeds);
     $('#ed-med-b', el).onclick = () => { Settings.set('ultimaEstacion', e.id); Sheet.stack.slice().forEach(x => x.close()); App.tab('brujula'); };
@@ -2094,11 +2212,13 @@ const Libreta = {
     const m = await DB.get('media', id); if (!m) return;
     const url = URL.createObjectURL(m.blob);
     const e = await DB.get('estaciones', m.estacionId);
+    const ORIG = { gps: 'GPS al sacarla', foto: 'ubicación guardada en la foto', estacion: 'ubicación de la estación' };
+    const ubic = m.tipo === 'foto' ? (m.lat != null ? '<div class="card loc"><div class="loc-main mono">📍 ' + esc(coordLine(m.lat, m.lon)) + '</div><div class="muted small">' + esc(fmtCoord(m.lat, m.lon).sub) + (m.acc != null ? ' · ±' + m.acc + ' m' : '') + ' · ' + esc(ORIG[m.origen] || 'GPS') + ' · ' + esc(fmtFecha(m.fecha)) + '</div></div>' : '<div class="card loc muted small">Sin ubicación: la estación no tenía coordenadas cuando sacaste la foto.</div>') : '';
     const s = Sheet.open(`<div class="sheet-head"><button class="icon-btn" data-close>←</button><h3>${m.tipo === 'foto' ? 'Foto' : 'Croquis'} · ${esc(e?.codigo || '')}</h3><span></span></div>
-      <div class="sheet-body"><img class="media-full" src="${url}" alt=""><label class="fld"><span>Nota</span><input id="vm-nota" value="${esc(m.nota || '')}" placeholder="Qué se ve, escala, orientación de la vista"></label>
+      <div class="sheet-body"><img class="media-full" src="${url}" alt="">${ubic}<label class="fld"><span>Nota</span><input id="vm-nota" value="${esc(m.nota || '')}" placeholder="Qué se ve, escala, orientación de la vista"></label>
       <div class="row-btns wrap">${m.tipo === 'croquis' ? '<button class="btn" id="vm-edit">Editar</button>' : ''}<button class="btn ghost" id="vm-share">Compartir</button><button class="btn danger" id="vm-del">Eliminar</button></div></div>`, { full: true, onClose: () => { URL.revokeObjectURL(url); cb && cb(); } });
     $('#vm-nota', s.el).oninput = debounce(async ev => { m.nota = ev.target.value; await DB.put('media', m); }, 400);
-    $('#vm-share', s.el).onclick = () => compartirOBajar(m.blob, (e?.codigo || 'img') + '_' + m.tipo + (m.tipo === 'foto' ? '.jpg' : '.png'));
+    $('#vm-share', s.el).onclick = async () => compartirOBajar(m.tipo === 'foto' ? await Exportar.fotoGeo(m, e) : m.blob, (e?.codigo || 'img') + '_' + m.tipo + (m.tipo === 'foto' ? '.jpg' : '.png'));
     $('#vm-del', s.el).onclick = async () => { if (await confirmar('¿Eliminar?', 'Eliminar', true)) { await DB.del('media', m.id); s.close(); } };
     const ed = $('#vm-edit', s.el); if (ed) ed.onclick = () => { s.close(); Croquis.abrir(e, m, cb); };
   },
@@ -2389,6 +2509,11 @@ const Exportar = {
   csv(rows) { return '﻿' + rows.map(r => r.map(v => { const s = v == null ? '' : String(v); return /[",;\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(',')).join('\r\n'); },
   xml: s => esc(s),
   nombreArchivo(e, m, i) { return (m.tipo === 'foto' ? 'fotos/' : 'croquis/') + (e?.codigo || 'sin_estacion').replace(/[^\w.-]+/g, '_') + '_' + (m.tipo === 'foto' ? 'F' : 'C') + pad(i + 1) + (m.tipo === 'foto' ? '.jpg' : '.png'); },
+  /** Foto con la ubicación escrita en el EXIF (la que lee Google Fotos, Google Earth, QGIS) */
+  async fotoGeo(m, e) {
+    const lat = m.lat ?? e?.lat, lon = m.lon ?? e?.lon;
+    return Exif.conGPS(m.blob, { lat, lon, alt: m.alt ?? (m.lat == null ? e?.alt : null), acc: m.acc ?? null, fecha: m.fecha, desc: [e?.codigo, e?.unidad, m.nota].filter(Boolean).join(' - ') });
+  },
   async datos() {
     const est = (await DB.all('estaciones')).sort((a, b) => (a.creado || '').localeCompare(b.creado || ''));
     return { est, meds: await DB.all('mediciones'), media: await DB.all('media'), recs: await DB.all('recorridos'), paradas: await DB.kvGet('paradas', {}) };
@@ -2419,8 +2544,9 @@ const Exportar = {
     files.push({ name: 'estaciones.geojson', data: JSON.stringify(gj, null, 1) });
     // KML
     const x = this.xml;
-    let kml = '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>PIC I 2026 · estaciones</name><Style id="e"><IconStyle><color>ff2b45b0</color><scale>0.9</scale></IconStyle></Style>';
+    let kml = '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>PIC I 2026 · estaciones</name><Style id="e"><IconStyle><color>ff2b45b0</color><scale>0.9</scale></IconStyle></Style><Style id="f"><IconStyle><scale>0.8</scale><Icon><href>http://maps.google.com/mapfiles/kml/shapes/camera.png</href></Icon></IconStyle></Style>';
     for (const e of est.filter(e => e.lat != null)) kml += `<Placemark><name>${x(e.codigo)}</name><styleUrl>#e</styleUrl><description>${x([e.parada && 'Parada ' + e.parada, e.unidad, e.desc, e.muestras && 'Muestras: ' + e.muestras, ...meds.filter(m => m.estacionId === e.id).map(m => (TIPO[m.tipo]?.label || m.tipo) + ': ' + Med.texto(m))].filter(Boolean).join('\n'))}</description><Point><coordinates>${e.lon.toFixed(7)},${e.lat.toFixed(7)}${e.alt != null ? ',' + Math.round(e.alt) : ''}</coordinates></Point></Placemark>`;
+    kml += '__FOTOS__';
     for (const r of recs) if (r.puntos.length > 1) kml += `<Placemark><name>${x(r.nombre)}</name><LineString><tessellate>1</tessellate><coordinates>${r.puntos.map(p => p[1] + ',' + p[0]).join(' ')}</coordinates></LineString></Placemark>`;
     kml += '</Document></kml>';
     files.push({ name: 'estaciones.kml', data: kml });
@@ -2443,11 +2569,19 @@ const Exportar = {
     const cont = {}, mediaMeta = [];
     for (const m of media.sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''))) {
       const k = m.estacionId + m.tipo; cont[k] = (cont[k] || 0);
-      const nombre = this.nombreArchivo(byId[m.estacionId], m, cont[k]++);
-      files.push({ name: nombre, data: new Uint8Array(await m.blob.arrayBuffer()) });
-      mediaMeta.push({ id: m.id, estacionId: m.estacionId, tipo: m.tipo, fecha: m.fecha, nota: m.nota, lat: m.lat, lon: m.lon, archivo: nombre });
+      const e = byId[m.estacionId], nombre = this.nombreArchivo(e, m, cont[k]++);
+      const blob = m.tipo === 'foto' ? await this.fotoGeo(m, e) : m.blob;
+      files.push({ name: nombre, data: new Uint8Array(await blob.arrayBuffer()) });
+      mediaMeta.push({ id: m.id, estacionId: m.estacionId, tipo: m.tipo, fecha: m.fecha, nota: m.nota, lat: m.lat ?? null, lon: m.lon ?? null, acc: m.acc ?? null, alt: m.alt ?? null, origen: m.origen || null, archivo: nombre });
     }
-    if (mediaMeta.some(m => m.nota)) files.push({ name: 'notas_de_fotos.csv', data: this.csv([['archivo', 'nota'], ...mediaMeta.map(m => [m.archivo, m.nota || ''])]) });
+    // Tabla de fotos con coordenadas (QGIS: Capa → Agregar capa de texto delimitado, X = lon, Y = lat)
+    const ORIG = { gps: 'GPS al sacarla', foto: 'EXIF de la foto', estacion: 'coordenada de la estación' };
+    const fotos = mediaMeta.filter(m => m.tipo === 'foto').map(m => { const e = byId[m.estacionId]; const lat = m.lat ?? e?.lat, lon = m.lon ?? e?.lon; const u = lat != null ? tmFwd(lat, lon, PROJ.utm) : null; return Object.assign({}, m, { lat, lon, u, est: e?.codigo }); });
+    if (fotos.length) files.push({ name: 'fotos.csv', data: this.csv([['archivo', 'estacion', 'fecha', 'lat', 'lon', 'utm19s_e', 'utm19s_n', 'precision_m', 'origen_ubicacion', 'nota'], ...fotos.map(f => [f.archivo, f.est, f.fecha, f.lat?.toFixed(7), f.lon?.toFixed(7), f.u ? Math.round(f.u[0]) : '', f.u ? Math.round(f.u[1]) : '', f.acc ?? '', ORIG[f.origen] || (f.lat != null ? 'coordenada de la estación' : 'sin ubicación'), f.nota || ''])]) });
+    const kmlFotos = fotos.filter(f => f.lat != null).map(f => `<Placemark><name>${x(f.archivo.replace('fotos/', ''))}</name><styleUrl>#f</styleUrl><description><![CDATA[<img src="${f.archivo}" width="480"><br>${x(f.est || '')} · ${x(fmtFecha(f.fecha))}${f.nota ? '<br>' + x(f.nota) : ''}]]></description><Point><coordinates>${f.lon.toFixed(7)},${f.lat.toFixed(7)}</coordinates></Point></Placemark>`).join('');
+    const ki = files.findIndex(f => f.name === 'estaciones.kml');
+    files[ki].data = files[ki].data.replace('__FOTOS__', kmlFotos ? '<Folder><name>Fotos</name>' + kmlFotos + '</Folder>' : '');
+    if (fotos.length) { const gi = files.findIndex(f => f.name === 'estaciones.geojson'); const g = JSON.parse(files[gi].data); for (const f of fotos) if (f.lat != null) g.features.push({ type: 'Feature', geometry: { type: 'Point', coordinates: [+f.lon.toFixed(7), +f.lat.toFixed(7)] }, properties: { foto: f.archivo, estacion: f.est, fecha: f.fecha, nota: f.nota || '' } }); files[gi].data = JSON.stringify(g, null, 1); }
     // Respaldo completo para restaurar en otro celular
     files.push({ name: 'respaldo_app.json', data: JSON.stringify({ app: 'pic-campo', version: APP_VERSION, exportado: nowISO(), estaciones: est, mediciones: meds, media: mediaMeta, recorridos: recs, paradas }) });
     const blob = Zip.crear(files);

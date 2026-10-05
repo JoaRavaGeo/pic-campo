@@ -1,5 +1,5 @@
 /* Service worker · PIC Campo */
-const VERSION = '09b0bf90';
+const VERSION = 'd04bbbb8';
 const SHELL = 'pic-app-' + VERSION;
 const TILES = 'pic-teselas-v1';
 const ARCHIVOS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];

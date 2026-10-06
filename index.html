@@ -705,7 +705,7 @@ p { line-height: 1.45; }
 .tab-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: calc(10px + env(safe-area-inset-top)) 16px 10px; border-bottom: 1px solid var(--line); background: var(--paper); }
 .tab-head h2 { font-size: 1.45rem; }
 .tab-scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px 16px 28px; }
-#nav { position: fixed; left: 0; right: 0; bottom: 0; height: calc(var(--nav-h) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); display: grid; grid-template-columns: repeat(4, 1fr); background: var(--card); border-top: 1px solid var(--line); z-index: 1500; }
+#nav { position: fixed; left: 0; right: 0; bottom: 0; height: calc(var(--nav-h) + env(safe-area-inset-bottom)); padding-bottom: env(safe-area-inset-bottom); display: grid; grid-template-columns: repeat(5, 1fr); background: var(--card); border-top: 1px solid var(--line); z-index: 1500; }
 #nav button { border: 0; background: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: .74rem; font-weight: 600; color: var(--muted); letter-spacing: .02em; }
 #nav svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
 #nav button.on { color: var(--rust); }
@@ -798,6 +798,8 @@ body.sin-fondo .grid-lbl { color: var(--muted); text-shadow: none; }
 .mk-gps .dot { position: absolute; left: 23px; top: 23px; width: 18px; height: 18px; border-radius: 50%; background: #1d6fd1; border: 3px solid #fff; box-shadow: 0 0 0 2px rgba(29,111,209,.35), 0 1px 4px rgba(0,0,0,.4); }
 .mk-gps .cone { display: none; position: absolute; inset: 0; background: conic-gradient(from -28deg at 50% 50%, rgba(29,111,209,.55) 0deg, rgba(29,111,209,0) 56deg, transparent 56deg); border-radius: 50%; -webkit-mask: radial-gradient(circle, #000 0 60%, transparent 61%); mask: radial-gradient(circle, #000 0 60%, transparent 61%); }
 .capa-img { image-rendering: auto; }
+.sombra-layer { mix-blend-mode: multiply; }
+.curvas-layer { pointer-events: none; }
 .map-top { position: absolute; top: calc(10px + env(safe-area-inset-top)); left: 10px; right: 70px; z-index: 1000; display: flex; gap: 8px; align-items: center; }
 .net { background: #1d1913; color: #f6efe2; font-size: .78rem; font-weight: 650; padding: 6px 10px; border-radius: 999px; box-shadow: var(--shadow); }
 .fabs { position: absolute; right: 10px; top: calc(10px + env(safe-area-inset-top)); z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
@@ -954,6 +956,87 @@ body.sin-fondo .grid-lbl { color: var(--muted); text-shadow: none; }
   .sheet-wrap.open .sheet:not(.full) { transform: translate(-50%, 0); }
   .tab-scroll, .sheet.full .sheet-body { max-width: 760px; margin: 0 auto; width: 100%; }
 }
+
+/* ---- notas de voz ---- */
+.voz { border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; margin: 8px 0; background: var(--paper); }
+.voz-h { display: flex; align-items: center; gap: 8px; }
+.voz-h .muted { flex: 1; }
+.voz audio { width: 100%; height: 40px; margin: 4px 0; }
+.voz-nota { width: 100%; border: 0; border-bottom: 1px dashed var(--line2); background: transparent; padding: 6px 2px; font-size: 15px; outline: none; }
+.rec-ov { position: fixed; inset: 0; z-index: 3600; background: rgba(15,10,5,.5); display: flex; align-items: flex-end; }
+.rec-panel { width: 100%; background: var(--card); border-radius: 18px 18px 0 0; padding: 18px 16px calc(18px + env(safe-area-inset-bottom)); text-align: center; }
+.rec-top { display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; color: var(--danger); }
+.rec-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--danger); animation: latido 1s infinite; }
+@keyframes latido { 50% { opacity: .25; } }
+.rec-t { font-size: 3rem; font-weight: 800; margin: 8px 0; }
+.rec-vu { height: 8px; background: var(--paper); border-radius: 4px; overflow: hidden; margin: 0 auto 12px; max-width: 320px; }
+.rec-vu div { height: 100%; width: 0; background: var(--green); transition: width .08s; }
+
+/* ---- columna estratigráfica ---- */
+.col-card { align-items: center; }
+.col-mini { flex: none; width: 46px; display: flex; flex-direction: column; gap: 1px; padding: 2px 0; }
+.col-mini i { display: block; height: 5px; border: .5px solid rgba(0,0,0,.45); border-left-width: 1px; }
+.cv-top { display: flex; align-items: center; gap: 10px; padding: 0 16px; }
+.cv-top .seg { flex: 1; margin: 8px 0; }
+.cv-tot { font-size: .82rem; color: var(--muted); white-space: nowrap; }
+.cv-body { flex: 1; padding-bottom: 90px; }
+.cv-foot { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--card) 30%); }
+.cv-foot .btn { width: 100%; box-shadow: var(--shadow); }
+.cv-svg { overflow: auto; -webkit-overflow-scrolling: touch; background: #fff; border: 1px solid var(--line); border-radius: 10px; margin: 4px -4px; }
+.cv-svg svg { display: block; }
+.cv-esc .fld { margin: 4px 0 8px; }
+.capa-row { width: 100%; display: flex; gap: 10px; align-items: stretch; text-align: left; border: 0; border-bottom: 1px solid var(--line); background: transparent; padding: 8px 0; }
+.capa-bar { flex: none; width: 64px; display: flex; align-items: center; }
+.capa-main { flex: 1; min-width: 0; }
+.capa-l1 { font-size: .93rem; }
+.capa-l2 { font-size: .8rem; color: var(--muted); margin-top: 2px; }
+.capa-l3 { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-top: 4px; color: var(--ink); }
+.capa-l4 { margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.capa-n { flex: none; font: 700 .75rem var(--mono); color: var(--muted); padding-top: 2px; }
+.ce-h { font-size: 1rem; margin: 16px 0 6px; }
+.esp-row { display: flex; gap: 8px; align-items: flex-end; }
+.esp-row .fld { flex: 1; margin: 6px 0; }
+.esp-row .seg { margin: 6px 0; width: 96px; flex: none; }
+.esp-row .btn { margin: 6px 0; min-height: 44px; }
+.lito-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
+.lito-grid button { display: flex; align-items: center; gap: 8px; text-align: left; border: 1.5px solid var(--line2); background: var(--card); border-radius: 10px; padding: 6px 8px; font-size: .84rem; font-weight: 600; min-height: 42px; }
+.lito-grid button svg { flex: none; border-radius: 3px; }
+.lito-grid button.on, .estr-grid button.on { border-color: var(--rust); box-shadow: inset 0 0 0 1.5px var(--rust); background: color-mix(in srgb, var(--rust) 10%, var(--card)); }
+.gran { display: grid; grid-template-columns: repeat(11, 1fr); gap: 3px; align-items: end; margin: 4px 0 6px; }
+.gran[hidden] { display: none; }
+.gran button { border: 1.5px solid var(--line2); background: var(--card); border-radius: 7px; font: 700 .72rem var(--sans); padding: 0; height: calc(18px + var(--h)); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 4px; }
+.gran button.on { background: var(--rust); border-color: var(--rust); color: var(--rust-ink); }
+.estr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
+.estr-grid button { display: flex; align-items: center; gap: 8px; text-align: left; border: 1.5px solid var(--line2); background: var(--card); border-radius: 10px; padding: 6px 8px; font-size: .8rem; font-weight: 600; min-height: 40px; color: var(--ink); }
+.estr-grid button svg { flex: none; }
+.ico-estr { vertical-align: -3px; }
+.ev-big { font-size: 2rem; font-weight: 800; }
+
+/* ---- teledetección ---- */
+.mk-dep i { position: absolute; left: 0; top: 0; width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 14px solid #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,.6)); }
+.mk-dep i::after { content: ''; position: absolute; left: -5px; top: 4px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 8px solid #1f1b16; }
+.mk-dep span { position: absolute; left: 18px; top: 0; font: 700 11px/14px var(--sans); color: #fff; text-shadow: 0 0 3px #000, 0 0 2px #000; white-space: nowrap; }
+.mk-blanco span { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; transform: rotate(45deg); background: #b000aa; border: 2.5px solid #fff; box-shadow: 0 1px 5px rgba(0,0,0,.55); }
+.mk-blanco b { transform: rotate(-45deg); font: 800 11px var(--sans); color: #fff; }
+.tele-ley i { display: inline-block; width: 14px; height: 10px; border-radius: 2px; vertical-align: -1px; margin: 0 4px 0 6px; }
+.tele-ley i:first-child { margin-left: 0; }
+.tele-ley .ley-it { display: inline-flex; align-items: baseline; margin: 1px 10px 1px 0; }
+.tele-ley .ley-it i { margin: 0 5px 0 0; flex: none; }
+.tele-ley .ley-nota { margin-top: 4px; }
+.ley-grad { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.ley-grad b { flex: 1; height: 10px; border-radius: 2px; }
+.tele-grupo { font: 700 11px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 14px 0 4px; }
+.tele-grupo:first-child { margin-top: 6px; }
+.tele-px { image-rendering: pixelated; }
+.blanco { border: 1px solid var(--line); background: var(--card); border-radius: var(--r); padding: 10px 12px; margin: 8px 0; }
+.blanco-h { display: flex; gap: 8px; align-items: center; }
+.blanco-id { flex: none; width: 26px; height: 26px; transform: rotate(45deg); background: #b000aa; display: flex; align-items: center; justify-content: center; border-radius: 3px; }
+.blanco-id b { transform: rotate(-45deg); color: #fff; font-size: .72rem; }
+.blanco p { margin: 6px 0; font-size: .9rem; }
+.val-tab { width: 100%; border-collapse: collapse; font-size: .84rem; margin: 6px 0; }
+.val-tab th, .val-tab td { text-align: left; padding: 5px 4px; border-bottom: 1px solid var(--line); }
+.val-tab td.n { font-family: var(--mono); text-align: right; }
+.val-tab .hi { color: var(--rust); font-weight: 700; }
 </style>
 </head>
 <body>
@@ -992,6 +1075,14 @@ body.sin-fondo .grid-lbl { color: var(--muted); text-shadow: none; }
     </div>
   </section>
 
+  <section id="tab-columna" class="tab" aria-label="Columna">
+    <header class="tab-head"><h2>Columnas</h2><button class="icon-btn" data-ajustes aria-label="Ajustes">⚙</button></header>
+    <div class="tab-scroll">
+      <div class="lib-acciones"><button id="col-nueva" class="btn primary big">+ Nueva columna</button></div>
+      <div id="lista-col"></div>
+    </div>
+  </section>
+
   <section id="tab-brujula" class="tab" aria-label="Brújula"></section>
 
   <section id="tab-guia" class="tab" aria-label="Guía">
@@ -1003,11 +1094,13 @@ body.sin-fondo .grid-lbl { color: var(--muted); text-shadow: none; }
 <nav id="nav">
   <button data-tab="mapa" class="on"><svg viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Zm0 0v14m6-12v14"/></svg>Mapa</button>
   <button data-tab="libreta"><svg viewBox="0 0 24 24"><path d="M6 3h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6V3Zm0 0H5v18h1M10 8h6M10 12h6M10 16h3"/></svg>Libreta</button>
+  <button data-tab="columna"><svg viewBox="0 0 24 24"><path d="M5 4h8v4H5zM5 8h12v5H5zM5 13h6v3H5zM5 16h14v4H5z"/></svg>Columna</button>
   <button data-tab="brujula"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></svg>Brújula</button>
   <button data-tab="guia"><svg viewBox="0 0 24 24"><path d="M4 5.5C6.5 4 9.5 4 12 5.5 14.5 4 17.5 4 20 5.5V19c-2.5-1.5-5.5-1.5-8 0-2.5-1.5-5.5-1.5-8 0V5.5ZM12 5.5V19"/></svg>Guía</button>
 </nav>
 <div id="toast" role="status" aria-live="polite"></div>
 <datalist id="dl-unidades"></datalist>
+<datalist id="dl-facies"></datalist>
 
 <script>/* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
@@ -1121,7 +1214,7 @@ function offsetLL(lat, lon, dE, dN) { const [e, n] = tmFwd(lat, lon, PROJ.utm); 
 /* ============ Ajustes (localStorage) ============ */
 const Settings = {
   KEY: 'pic.ajustes.v1',
-  def: { prefijo: 'E', formato: 'utm', declinacion: -1.9, norte: 'mag', tema: 'auto', base: 'sat', grilla: true, verParadas: true, verEstaciones: true, verRecorrido: true, verImportados: true, destino: null, ultimaEstacion: null, grupo: '', modoBrujula: 'plano', pantallaOn: false, z17: false },
+  def: { prefijo: 'E', formato: 'utm', declinacion: -1.9, norte: 'mag', tema: 'auto', base: 'sat', grilla: true, verParadas: true, verEstaciones: true, verRecorrido: true, verImportados: true, destino: null, ultimaEstacion: null, grupo: '', modoBrujula: 'plano', pantallaOn: false, z17: false, curvas: true, sombra: false, curvasIntervalo: 'auto', sombraOpacidad: 0.45, teleCapas: [], teleMarcas: true, teleOp: {} },
   v: null,
   load() { try { this.v = Object.assign({}, this.def, JSON.parse(localStorage.getItem(this.KEY) || '{}')); } catch (e) { this.v = Object.assign({}, this.def); } },
   get(k) { if (!this.v) this.load(); return this.v[k]; },
@@ -1134,11 +1227,11 @@ function refLabel() { return Settings.get('norte') === 'geo' ? 'N geográfico' :
 /* ============ IndexedDB ============ */
 const DB = {
   db: null,
-  STORES: { estaciones: 'id', mediciones: 'id', media: 'id', capas: 'id', recorridos: 'id', importados: 'id', kv: 'k' },
+  STORES: { estaciones: 'id', mediciones: 'id', media: 'id', capas: 'id', recorridos: 'id', importados: 'id', kv: 'k', columnas: 'id' },
   open() {
     if (this.db) return Promise.resolve(this.db);
     return new Promise((res, rej) => {
-      const r = indexedDB.open('pic-campo', 1);
+      const r = indexedDB.open('pic-campo', 2);
       r.onupgradeneeded = () => {
         const db = r.result;
         for (const [n, k] of Object.entries(this.STORES)) {
@@ -1462,6 +1555,184 @@ const Recorrido = {
 };
 Geo.subs.add(p => Recorrido.onPos(p));
 
+/* ============ Relieve: modelo de elevación embebido, curvas de nivel y sombreado ============ */
+const Relieve = {
+  meta: null, z: null, listo: null,
+  cargar() {
+    if (this.listo) return this.listo;
+    this.listo = (async () => {
+      const r = await fetch('relieve.bin');
+      if (!r.ok) throw new Error('No encontré relieve.bin');
+      const buf = await r.arrayBuffer(), dv = new DataView(buf);
+      const hl = dv.getUint32(4, true);
+      const meta = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 8, hl)));
+      const comp = new Uint8Array(buf, 8 + hl);
+      const raw = await new Response(new Blob([comp]).stream().pipeThrough(new DecompressionStream('deflate'))).arrayBuffer();
+      const d = new Int16Array(raw), n = meta.w * meta.h, z = new Float32Array(n);
+      let acc = meta.base; for (let i = 0; i < n; i++) { acc += d[i]; z[i] = acc * meta.escala; }
+      this.meta = meta; this.z = z;
+      this.mpp = 40075016.686 / (2 ** meta.z * meta.tile); // metros por píxel en el ecuador (Mercator)
+      return this;
+    })();
+    return this.listo;
+  },
+  /** píxel global (Mercator) de lat/lon en la grilla del modelo */
+  px(lat, lon) { const m = this.meta, n = 2 ** m.z * m.tile, r = lat * D2R; return [(lon + 180) / 360 * n - m.px0 - 0.5, (1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2 * n - m.py0 - 0.5]; },
+  /** elevación interpolada en coordenadas de grilla; NaN fuera */
+  at(x, y) {
+    const m = this.meta; if (!m) return NaN;
+    if (x < 0 || y < 0 || x > m.w - 1 || y > m.h - 1) return NaN;
+    const i = Math.min(Math.floor(x), m.w - 2), j = Math.min(Math.floor(y), m.h - 2), fx = x - i, fy = y - j, z = this.z, k = j * m.w + i;
+    return (z[k] * (1 - fx) + z[k + 1] * fx) * (1 - fy) + (z[k + m.w] * (1 - fx) + z[k + m.w + 1] * fx) * fy;
+  },
+  cota(lat, lon) { if (!this.meta) return null; const [x, y] = this.px(lat, lon); const v = this.at(x, y); return isNaN(v) ? null : v; },
+  intervalo(zoom) {
+    const v = Settings.get('curvasIntervalo');
+    if (v && v !== 'auto') return Number(v);
+    return zoom >= 15 ? 10 : zoom >= 14 ? 20 : zoom >= 13 ? 50 : 100;
+  },
+  /** Muestrea una grilla (n+1)x(n+1) sobre una tesela de Leaflet (coords z/x/y, 256 px) */
+  muestrear(coords, n) {
+    const m = this.meta, f = 2 ** (m.z - coords.z) * m.tile / 256;
+    const gx0 = coords.x * 256 * f - m.px0 - 0.5, gy0 = coords.y * 256 * f - m.py0 - 0.5, paso = 256 * f / n;
+    const N = n + 1, out = new Float32Array(N * N); let algo = false, min = Infinity, max = -Infinity;
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+      const v = this.at(gx0 + i * paso, gy0 + j * paso); out[j * N + i] = v;
+      if (!isNaN(v)) { algo = true; if (v < min) min = v; if (v > max) max = v; }
+    }
+    return { g: out, N, algo, min, max, paso, f };
+  },
+  /** Marching squares: devuelve polilíneas (en coordenadas de grilla) para el umbral t */
+  isolineas(g, N, t) {
+    const segs = [];
+    const P = (i, j, i2, j2) => { const a = g[j * N + i], b = g[j2 * N + i2], k = (t - a) / (b - a); return [i + (i2 - i) * k, j + (j2 - j) * k]; };
+    for (let j = 0; j < N - 1; j++) for (let i = 0; i < N - 1; i++) {
+      const a = g[j * N + i], b = g[j * N + i + 1], c = g[(j + 1) * N + i + 1], d = g[(j + 1) * N + i];
+      if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d)) continue;
+      const code = (a > t ? 8 : 0) | (b > t ? 4 : 0) | (c > t ? 2 : 0) | (d > t ? 1 : 0);
+      if (code === 0 || code === 15) continue;
+      const T = () => P(i, j, i + 1, j), R = () => P(i + 1, j, i + 1, j + 1), B = () => P(i, j + 1, i + 1, j + 1), L = () => P(i, j, i, j + 1);
+      switch (code) {
+        case 1: case 14: segs.push([L(), B()]); break;
+        case 2: case 13: segs.push([B(), R()]); break;
+        case 3: case 12: segs.push([L(), R()]); break;
+        case 4: case 11: segs.push([T(), R()]); break;
+        case 6: case 9: segs.push([T(), B()]); break;
+        case 7: case 8: segs.push([L(), T()]); break;
+        case 5: case 10: {
+          const ctr = (a + b + c + d) / 4 > t;
+          if ((code === 5) === ctr) { segs.push([L(), T()]); segs.push([B(), R()]); } else { segs.push([L(), B()]); segs.push([T(), R()]); }
+          break;
+        }
+      }
+    }
+    // unir segmentos en polilíneas
+    const key = p => Math.round(p[0] * 1e4) + ',' + Math.round(p[1] * 1e4);
+    const ends = new Map(), used = new Uint8Array(segs.length);
+    segs.forEach((s, k) => { for (const e of [0, 1]) { const kk = key(s[e]); if (!ends.has(kk)) ends.set(kk, []); ends.get(kk).push(k); } });
+    const lines = [];
+    for (let k = 0; k < segs.length; k++) {
+      if (used[k]) continue; used[k] = 1;
+      const line = [segs[k][0], segs[k][1]];
+      for (const dir of [1, 0]) {
+        for (;;) {
+          const tip = dir ? line[line.length - 1] : line[0];
+          const cand = (ends.get(key(tip)) || []).find(x => !used[x]);
+          if (cand == null) break;
+          used[cand] = 1;
+          const s = segs[cand], nxt = key(s[0]) === key(tip) ? s[1] : s[0];
+          if (dir) line.push(nxt); else line.unshift(nxt);
+        }
+      }
+      lines.push(line);
+    }
+    return lines;
+  },
+};
+
+/* Capa de curvas de nivel (se calculan por tesela, sin conexión) */
+const CurvasLayer = L.GridLayer.extend({
+  options: { tileSize: 256, minZoom: 11, maxZoom: 19, updateWhenZooming: false, keepBuffer: 2, className: 'curvas-layer', pane: 'overlayPane' },
+  createTile(coords) {
+    const t = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1);
+    t.width = t.height = 256 * dpr;
+    if (!Relieve.meta || coords.z < 11) return t;
+    const iv = Relieve.intervalo(coords.z), idx = iv * 5;
+    const n = coords.z >= 14 ? 64 : 128;
+    const s = Relieve.muestrear(coords, n);
+    if (!s.algo) return t;
+    const ctx = t.getContext('2d'); ctx.scale(dpr, dpr);
+    const k = 256 / n, sat = Settings.get('base') === 'sat';
+    const col = sat ? '#ffd79a' : '#9b5f2e', halo = sat ? 'rgba(20,12,4,.55)' : 'rgba(255,253,248,.9)';
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    const etiquetas = [];
+    for (let v = Math.ceil(s.min / iv) * iv; v <= s.max; v += iv) {
+      const lines = Relieve.isolineas(s.g, s.N, v);
+      const esIdx = Math.abs(v % idx) < 1e-6;
+      const draw = (w, c) => { ctx.strokeStyle = c; ctx.lineWidth = w; ctx.beginPath(); for (const l of lines) { ctx.moveTo(l[0][0] * k, l[0][1] * k); for (let q = 1; q < l.length; q++) ctx.lineTo(l[q][0] * k, l[q][1] * k); } ctx.stroke(); };
+      if (sat) draw(esIdx ? 2.6 : 1.8, halo);
+      draw(esIdx ? 1.5 : 0.7, col);
+      if (esIdx) for (const l of lines) if (l.length > 10) etiquetas.push({ l, v });
+    }
+    // rótulos de las curvas índice
+    ctx.font = '600 10px ' + getComputedStyle(document.body).getPropertyValue('--sans');
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const ocupados = [];
+    for (const { l, v } of etiquetas) {
+      const mid = Math.floor(l.length / 2), a = l[Math.max(0, mid - 2)], b = l[Math.min(l.length - 1, mid + 2)];
+      const x = l[mid][0] * k, y = l[mid][1] * k;
+      if (x < 22 || x > 234 || y < 12 || y > 244) continue;
+      if (ocupados.some(o => Math.hypot(o[0] - x, o[1] - y) < 60)) continue;
+      ocupados.push([x, y]);
+      let ang = Math.atan2((b[1] - a[1]), (b[0] - a[0])); if (ang > Math.PI / 2) ang -= Math.PI; if (ang < -Math.PI / 2) ang += Math.PI;
+      const txt = String(Math.round(v));
+      ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+      ctx.lineWidth = 3.2; ctx.strokeStyle = sat ? 'rgba(20,12,4,.8)' : 'rgba(255,253,248,.95)'; ctx.strokeText(txt, 0, 0);
+      ctx.fillStyle = col; ctx.fillText(txt, 0, 0); ctx.restore();
+    }
+    return t;
+  },
+});
+
+/* Sombreado (hillshade): se calcula una vez sobre la grilla del modelo (método de Horn) y se interpola por tesela */
+Relieve.sombra = function () {
+  if (this._sh) return this._sh;
+  const m = this.meta, W = m.w, H = m.h, z = this.z, sh = new Float32Array(W * H);
+  const latC = (Math.atan(Math.sinh(Math.PI * (1 - 2 * (m.py0 + H / 2) / (2 ** m.z * m.tile))))), cell = this.mpp * Math.cos(latC), exag = 1.5;
+  const az = 315 * D2R, alt = 45 * D2R, Lx = Math.sin(az) * Math.cos(alt), Ly = Math.cos(az) * Math.cos(alt), Lz = Math.sin(alt);
+  const Z = (i, j) => z[Math.max(0, Math.min(H - 1, j)) * W + Math.max(0, Math.min(W - 1, i))];
+  for (let j = 0; j < H; j++) for (let i = 0; i < W; i++) {
+    const a = Z(i - 1, j - 1), b = Z(i, j - 1), c = Z(i + 1, j - 1), d = Z(i - 1, j), f = Z(i + 1, j), g = Z(i - 1, j + 1), h = Z(i, j + 1), k = Z(i + 1, j + 1);
+    const dzdx = ((c + 2 * f + k) - (a + 2 * d + g)) / (8 * cell) * exag; // hacia el este
+    const dzdy = ((g + 2 * h + k) - (a + 2 * b + c)) / (8 * cell) * exag; // hacia el sur
+    const nx = -dzdx, ny = dzdy, nn = Math.hypot(nx, ny, 1);
+    sh[j * W + i] = Math.max(0, Math.min(1, (nx * Lx + ny * Ly + Lz) / nn));
+  }
+  this._sh = sh; return sh;
+};
+const SombraLayer = L.GridLayer.extend({
+  options: { tileSize: 256, minZoom: 10, maxZoom: 19, updateWhenZooming: false, className: 'sombra-layer', pane: 'tilePane', zIndex: 5 },
+  createTile(coords) {
+    const t = document.createElement('canvas'); t.width = t.height = 256;
+    if (!Relieve.meta) return t;
+    const sh = Relieve.sombra(), m = Relieve.meta, W = m.w, H = m.h;
+    const n = 128, f = 2 ** (m.z - coords.z) * m.tile / 256, paso = 256 * f / n;
+    const gx0 = coords.x * 256 * f - m.px0 - 0.5, gy0 = coords.y * 256 * f - m.py0 - 0.5;
+    const ctx = t.getContext('2d'), img = ctx.createImageData(n, n); let algo = false;
+    for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+      const x = gx0 + (i + 0.5) * paso, y = gy0 + (j + 0.5) * paso, p = 4 * (j * n + i);
+      if (x < 0 || y < 0 || x > W - 1 || y > H - 1) { img.data[p + 3] = 0; continue; }
+      const i0 = Math.min(Math.floor(x), W - 2), j0 = Math.min(Math.floor(y), H - 2), fx = x - i0, fy = y - j0, q = j0 * W + i0;
+      const v = (sh[q] * (1 - fx) + sh[q + 1] * fx) * (1 - fy) + (sh[q + W] * (1 - fx) + sh[q + W + 1] * fx) * fy;
+      const c = Math.round(255 * v); img.data[p] = img.data[p + 1] = img.data[p + 2] = c; img.data[p + 3] = 255; algo = true;
+    }
+    if (!algo) return t;
+    const tmp = document.createElement('canvas'); tmp.width = tmp.height = n; tmp.getContext('2d').putImageData(img, 0, 0);
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; ctx.drawImage(tmp, 0, 0, 256, 256);
+    return t;
+  },
+});
+
 /* ============ Mapa ============ */
 const TILE_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
 const TILE_CACHE = 'pic-teselas-v1';
@@ -1480,8 +1751,13 @@ const Mapa = {
     L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
     this.base = L.tileLayer(TILE_URL, { maxNativeZoom: 17, maxZoom: 19, attribution: 'Imágenes © Esri, Maxar, Earthstar Geographics', errorTileUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==' });
     this.grid = new GridUTM();
+    const atrRel = 'Relieve: Copernicus DEM GLO-30 (ESA) vía Mapterhorn';
+    this.curvas = new CurvasLayer({ attribution: atrRel, zIndex: 3 });
+    this.sombra = new SombraLayer({ attribution: atrRel, opacity: Settings.get('sombraOpacidad') });
+    Relieve.cargar().then(() => { this.aplicarVisibilidad(); this.curvas.redraw(); this.sombra.redraw(); }).catch(e => console.warn('relieve', e));
     for (const k of ['capas', 'importados', 'recorridos', 'paradas', 'estaciones', 'gps']) this.g[k] = L.layerGroup().addTo(map);
     this.aplicarVisibilidad();
+    TeleMapa.init(map);
     map.on('dragstart', () => { if (this.follow) { this.follow = false; this.uiGps(); } });
     map.on('contextmenu', e => this.menuPunto(e.latlng));
     Geo.subs.add((p, err) => this.onPos(p, err));
@@ -1491,7 +1767,8 @@ const Mapa = {
     document.addEventListener('recorrido', () => this.dibujarRecorridos());
     document.addEventListener('recorrido-punto', () => this.dibujarRecorridos(true));
     document.addEventListener('ajuste', e => {
-      if (['base', 'grilla', 'verParadas', 'verEstaciones', 'verRecorrido', 'verImportados'].includes(e.detail)) this.aplicarVisibilidad();
+      if (['base', 'grilla', 'verParadas', 'verEstaciones', 'verRecorrido', 'verImportados', 'curvas', 'sombra'].includes(e.detail)) this.aplicarVisibilidad();
+      if (['base', 'curvasIntervalo'].includes(e.detail) && this.map.hasLayer(this.curvas)) this.curvas.redraw();
       if (['formato', 'norte', 'declinacion', 'destino'].includes(e.detail)) { this.uiInfo(); this.actualizarDestino(); }
     });
     $('#btn-capas').onclick = () => this.hojaCapas();
@@ -1510,6 +1787,8 @@ const Mapa = {
     if (S('base') === 'sat') this.base.addTo(m); else this.base.remove();
     document.body.classList.toggle('sin-fondo', S('base') !== 'sat');
     if (S('grilla')) this.grid.addTo(m); else this.grid.remove();
+    if (S('curvas') && Relieve.meta) this.curvas.addTo(m); else this.curvas.remove();
+    if (S('sombra') && Relieve.meta) this.sombra.addTo(m); else this.sombra.remove();
     const tg = (g, v) => v ? g.addTo(m) : g.remove();
     tg(this.g.paradas, S('verParadas')); tg(this.g.estaciones, S('verEstaciones')); tg(this.g.recorridos, S('verRecorrido')); tg(this.g.importados, S('verImportados'));
   },
@@ -1583,8 +1862,8 @@ const Mapa = {
 
   /* ---- Menú de toque largo ---- */
   menuPunto(ll) {
-    const c = fmtCoord(ll.lat, ll.lng);
-    L.popup().setLatLng(ll).setContent('<div class="pop"><div class="mono">' + esc(c.main) + '</div><div class="muted">' + esc(c.sub) + '</div><div class="pop-btns"><button class="btn sm primary" id="pp-est">Estación acá</button><button class="btn sm" id="pp-ir">Ir aquí</button></div></div>').openOn(this.map);
+    const c = fmtCoord(ll.lat, ll.lng), cota = Relieve.cota(ll.lat, ll.lng);
+    L.popup().setLatLng(ll).setContent('<div class="pop"><div class="mono">' + esc(c.main) + '</div><div class="muted">' + esc(c.sub) + '</div>' + (cota != null ? '<div class="small">Cota ≈ <b>' + Math.round(cota) + ' m</b> <span class="muted">(modelo de 30 m)</span></div>' : '') + '<div class="pop-btns"><button class="btn sm primary" id="pp-est">Estación acá</button><button class="btn sm" id="pp-ir">Ir aquí</button></div></div>').openOn(this.map);
     setTimeout(() => {
       const b1 = document.getElementById('pp-est'), b2 = document.getElementById('pp-ir');
       if (b1) b1.onclick = () => { this.map.closePopup(); Libreta.nueva({ lat: ll.lat, lon: ll.lng, acc: null }); };
@@ -1687,6 +1966,16 @@ const Mapa = {
           <label class="chk"><input type="checkbox" id="tl-z17" ${S('z17') ? 'checked' : ''}> Más detalle (zoom 17, ~4× más datos)</label>
           <div class="row-btns wrap"><button class="btn primary" id="tl-paradas">Bajar zona de las paradas</button><button class="btn" id="tl-vista">Bajar lo que veo ahora</button><button class="btn ghost" id="tl-borrar">Borrar</button></div>
           <div class="prog" id="tl-prog" hidden><div></div></div></div>
+        <div class="card"><h4>Teledetección · alteración hidrotermal</h4>
+          <p class="muted small">Minerales de alteración identificados con EMIT (hiperespectral, 2 fechas), cuarzo de ASTER térmico e índices de Sentinel-2, validados contra los depósitos conocidos. Empezá por la Síntesis. La interpretación y qué mirar en cada blanco están en Guía → Teledetección.</p>
+          <label class="sw"><input type="checkbox" id="tele-mk" ${S('teleMarcas') ? 'checked' : ''}><span>Depósitos conocidos y blancos B1–B6</span></label>
+          <div id="tele-capas">${TeleMapa.htmlCapas()}</div></div>
+        <div class="card"><h4>Relieve</h4>
+          <label class="sw"><input type="checkbox" data-k="curvas" ${S('curvas') ? 'checked' : ''}><span>Curvas de nivel</span></label>
+          <label class="fld"><span>Equidistancia</span><select id="cv-int"><option value="auto">Automática según el zoom</option><option value="10">10 m</option><option value="20">20 m</option><option value="25">25 m</option><option value="50">50 m</option><option value="100">100 m</option></select></label>
+          <label class="sw"><input type="checkbox" data-k="sombra" ${S('sombra') ? 'checked' : ''}><span>Sombreado del relieve</span></label>
+          <input type="range" min="0.15" max="0.9" step="0.05" value="${S('sombraOpacidad')}" id="cv-op" aria-label="Intensidad del sombreado">
+          <p class="muted small">${Relieve.meta ? 'Modelo Copernicus de 30 m incluido en la app: funciona sin señal en la zona del viaje (' + Math.round(Relieve.meta.min) + '–' + Math.round(Relieve.meta.max) + ' m). Cada 5 curvas hay una curva índice con su cota. Mantené apretado el mapa para ver la cota de un punto.' : 'Cargando el modelo de elevación…'}</p></div>
         <div class="card"><h4>Mostrar</h4>
           ${[['grilla', 'Grilla UTM'], ['verParadas', 'Paradas'], ['verEstaciones', 'Mis estaciones'], ['verRecorrido', 'Recorridos'], ['verImportados', 'Importados (KML/GPX) · ' + nImp]].map(([k, l]) => `<label class="sw"><input type="checkbox" data-k="${k}" ${S(k) ? 'checked' : ''}><span>${l}</span></label>`).join('')}
           <div class="row-btns"><button class="btn ${Recorrido.on ? 'danger' : ''}" id="cp-rec">${Recorrido.on ? '■ Detener recorrido' : '● Grabar recorrido'}</button></div>
@@ -1701,12 +1990,15 @@ const Mapa = {
       $$('#cp-base button', body).forEach(b => b.onclick = () => { Settings.set('base', b.dataset.v === 'sat' ? 'sat' : 'no'); render(); });
       $$('[data-k]', body).forEach(i => i.onchange = () => Settings.set(i.dataset.k, i.checked));
       $('#tl-z17', body).onchange = e => Settings.set('z17', e.target.checked);
+      $('#cv-int', body).value = String(S('curvasIntervalo')); $('#cv-int', body).onchange = e => Settings.set('curvasIntervalo', e.target.value);
+      $('#cv-op', body).oninput = e => { this.sombra.setOpacity(+e.target.value); }; $('#cv-op', body).onchange = e => Settings.set('sombraOpacidad', +e.target.value);
       $('#tl-paradas', body).onclick = () => Teselas.bajar('paradas', body);
       $('#tl-vista', body).onclick = () => Teselas.bajar('vista', body);
       $('#tl-borrar', body).onclick = async () => { if (await confirmar('¿Borrar las imágenes satelitales guardadas?', 'Borrar', true)) { await caches.delete(TILE_CACHE); Teselas.estado(body); } };
       $('#cp-rec', body).onclick = async () => { if (Recorrido.on) await Recorrido.stop(); else await Recorrido.start(); render(); };
       Teselas.estado(body);
-      $$('.capa', body).forEach(div => {
+      TeleMapa.enlazar(body, render);
+      $$('.capa[data-id]', body).forEach(div => {
         const id = div.dataset.id; const get = () => this.capas.get(id)?.c;
         $('[data-vis]', div).onchange = e => { const c = get(); c.visible = e.target.checked; this.guardarCapa(c); };
         $('[data-op]', div).oninput = e => { const c = get(); c.opacity = +e.target.value; this.capas.get(id).ov.setOpacity(c.opacity); };
@@ -1898,6 +2190,138 @@ const Importar = {
   },
 };
 
+/* ============ Teledetección (Sentinel-2 · EMIT · ASTER) ============ */
+const TELE = {
+  fuente: 'Sentinel-2 L2A (ESA Copernicus): mediana de 9 escenas de verano sin nubes (2019–2026), 10–20 m. EMIT (NASA, Estación Espacial Internacional): dos escenas hiperespectrales sin nubes (20/01/2025 y 19/01/2026), 285 bandas, píxel 60 m, minerales identificados con Tetracorder (USGS). ASTER (NASA/METI): reflectancia SWIR de 2000 y 2007 y emisividad térmica AG100 (~100 m). Procesado para PIC I 2026.',
+  depositos: [
+    { id: 'pn', nombre: 'Paramillos Norte', tipo: 'Pórfiro (núcleo de alteración)', lat: -32.430111, lon: -69.100917, val: 'S2: OH p64 · Fe³⁺ p89. EMIT (300 m): carbonatos 54 % y esmectita 29 %, sin mica blanca; ASTER: cuarzo bajo. La alteración fílica no se detecta en el punto.' },
+    { id: 'pc', nombre: 'Paramillos Centro', tipo: 'Pórfiro', lat: -32.464722, lon: -69.111111, val: 'S2: OH p83 · Fe³⁺ p93. EMIT: mica blanca 38 %, calcita-mica 22 %, carbonatos 23 %; goethita.' },
+    { id: 'ps', nombre: 'Paramillos Sur', tipo: 'Pórfiro (firma adakítica)', lat: -32.491667, lon: -69.1, val: 'S2: OH p98 · Fe³⁺ p97. EMIT: caolinita+mica 53 % y mica blanca 30 %: alteración fílica-argílica bien expuesta; goethita.' },
+    { id: 'cc', nombre: 'Cerro Canario', tipo: 'Pórfiro', lat: -32.516944, lon: -69.081944, val: 'S2: OH p99 · Fe³⁺ p98. EMIT: mica blanca 59 % con la banda Al-OH más profunda de los depósitos (0,10) y caolinita+mica 24 %. ASTER Al-OH p88.' },
+    { id: 'os', nombre: 'Oro del Sur', tipo: 'Epitermal', lat: -32.5, lon: -69.083333, val: 'S2: OH p78 · Fe³⁺ p75. EMIT: mica blanca 70 % (+ mica-clorita), goethita 100 %. ASTER Al-OH p95.' },
+    { id: 've', nombre: 'Vetas Paramillos de Uspallata', tipo: 'Vetas Pb-Ag-Zn', lat: -32.477778, lon: -69.1375, val: 'S2: OH p38 · Fe³⁺ p36. EMIT: carbonatos 91 % y Fe²⁺ 94 %: coincide con la ganga carbonática y los basaltos de caja. Las vetas (0,1–2 m) son mucho más finas que cualquier píxel.' },
+  ],
+  blancos: [
+    { id: 'B1', nombre: 'Núcleo de dickita/nacrita al NNE de 2026.1', lat: -32.431357, lon: -69.209597, cerca: '≈ 1,1 km al NNE de 2026.1 · 1,4 km al NE de 2026.2',
+      dato: 'EMIT identifica caolín bien cristalizado del tipo dickita/nacrita (72 % en 300 m) en un cuerpo de 54 ha. Sale igual en las dos fechas (81 % de los píxeles coinciden) y con banda profunda (~0,10). El espectro tiene un doblete en 2,17–2,21 µm más chato que el de la caolinita de B2. Alrededor hay caolinita + mica y mica blanca. ASTER: Al-OH p89, cuarzo moderado (p58). Es la faja NE-SO que ya marcaba Sentinel-2 (en esta zona el KMZ de la cátedra marca un cuerpo alargado NE-SO). La faja sigue 650 m al OSO y hay manchas de 2–8 ha a 200–330 m de 2026.2.',
+      hip: 'La dickita y la nacrita se forman con fluidos hidrotermales ácidos más calientes que los que dan caolinita común (o por diagénesis profunda); la meteorización no las produce. Si se confirma: alteración argílica avanzada hipogénica ligada a un intrusivo de la Fm. Cerro Redondo o a la falla Agua del Jagüel. Alternativa: mezcla fina de caolinita y mica, que también aplana el doblete. No hay alunita ni pirofilita a escala de 60 m.',
+      ver: 'Roca blanca, deleznable o silicificada; caolín blanco ceroso en venillas y fracturas; cuarzo oqueroso o sílice; óxidos en boxwork. Llevá muestra para DRX o espectrómetro portátil (es la única forma de separar dickita de caolinita). No debería efervescer con HCl.' },
+    { id: 'B2', nombre: 'Cuerpo de caolinita al O de 2026.5', lat: -32.487815, lon: -69.240199, cerca: '≈ 0,8 km al O de 2026.5',
+      dato: 'EMIT: 99 % caolinita (tipo mal cristalizada) con banda muy profunda (~0,25). Es parte de un cuerpo de ~207 ha que incluye B3 y 2026.5. ASTER térmico: cuarzo p95 y máficos bajos (p16), o sea una roca félsica rica en sílice. Sentinel-2 ya lo marcaba (>p97). Está sobre una loma, no en un barreal.',
+      hip: 'Alteración argílica sobre roca félsica rica en cuarzo (intrusivo cenozoico o tobas ácidas del Gr. Choiyoi). La caolinita mal cristalizada sin dickita ni alunita puede venir de argílica hidrotermal de baja temperatura o de caolinización supergénica o meteórica de una roca rica en feldespato. EMIT no detecta yeso.',
+      ver: 'Porfírica con feldespatos reemplazados por caolín → alteración; toba con trizas y pómez → litológico. Buscá cuarzo de vena o sílice, pirita u óxidos en boxwork. Fijate si la caolinita sigue fracturas (hidrotermal) o es pervasiva y sólo superficial (meteorización).' },
+    { id: 'B3', nombre: 'Borde E del cuerpo de caolinita (junto a 2026.5)', lat: -32.487594, lon: -69.228667, cerca: '≈ 350 m al SE de 2026.5',
+      dato: 'EMIT: 94 % caolinita, con goethita y poca hematita. En 2026.5 aparece además dickita/nacrita (16 %) en manchas de ~2 ha a 100–270 m de la parada. ASTER: cuarzo p87, Al-OH p86.',
+      hip: 'Borde del mismo sistema que B2. La dickita local junto a 2026.5 podría marcar el conducto más caliente (falla N-S o dique).',
+      ver: 'Contacto entre la roca clara y los basaltos o el Gr. Uspallata: ¿intrusivo?, ¿halo de alteración?, ¿falla N-S? Muestreá un perfil corto de la roca clara a la caja, cada 20–50 m, para ver si cambia la mineralogía.' },
+    { id: 'B4', nombre: 'Capas rojas entre 2026.1 y 2026.3', lat: -32.442028, lon: -69.215381, cerca: '≈ 250 m al SSO de 2026.1',
+      dato: 'EMIT: hematita 100 % con caolinita+mica y esmectita; ASTER cuarzo bajo (p32). La misma firma dan 2026.1 (hematita 95 %) y 2026.3 (94 %).',
+      hip: 'Muy probablemente litológico: areniscas y pelitas rojas del Gr. Uspallata con hematita y arcillas detríticas. La falta de jarosita y goethita y la presencia de esmectita lo favorecen.',
+      ver: 'Estratificación, laminación y granulometría → litológico. Sirve de control negativo: anotá cómo se ve en el campo una anomalía de hematita que no es alteración.' },
+    { id: 'B5', nombre: 'Mica blanca rica en Al al NNO (fuera del recorrido)', lat: -32.417457, lon: -69.231104, cerca: '≈ 2,5 km al NNO de 2026.2',
+      dato: 'EMIT: 82–94 % mica blanca con Al-OH en ~2202 nm (de las más cortas del área) y banda profunda (0,11–0,13), en un cuerpo de 46 ha que se repite en las dos fechas (98 %). ASTER: Mg-OH p90.',
+      hip: 'Sericita o muscovita bien desarrollada: alteración fílica, o micas metamórficas o detríticas del Gr. Santa Elena (queda al NO de la falla Agua del Jagüel). La espectroscopía sola no las separa; decide la textura.',
+      ver: 'Sólo si hay tiempo. Sericita fina que reemplaza feldespatos, con pirita o boxwork y venillas de cuarzo → fílica. Esquistosidad o micas en planos de estratificación de sedimentitas paleozoicas → litológico.' },
+    { id: 'B6', nombre: 'Mica + hematita al O de 2026.4 (fuera del recorrido)', lat: -32.468911, lon: -69.263084, cerca: '≈ 2,5 km al OSO de 2026.4',
+      dato: 'EMIT: 97 % mica blanca rica en Al (2202 nm, banda 0,12) junto con 97 % hematita, en un cuerpo de 32 ha igual en las dos fechas. ASTER: cuarzo p76.',
+      hip: 'Probablemente litológico: está al O de la falla Bonilla, en el Gr. Santa Elena; la mica detrítica con hematita es típica de sedimentitas rojas. Alternativa: halo fílico con hematita por oxidación de pirita.',
+      ver: 'Prioridad baja. Si pasás cerca: estratificación con mica en planos (litológico) o roca ígnea sericitizada con boxwork (alteración).' },
+  ],
+  trampas: [
+    'Sentinel-2 B11/B12 sube con cualquier mineral con OH o carbonato (sericita, caolinita, esmectitas, clorita, epidoto, micas de la Fm. Villavicencio y del Gr. Santa Elena, caliche, calcita, yeso). EMIT sí los separa.',
+    'EMIT da el mineral con la banda más fuerte en cada píxel de 60 m (3600 m²). Una mezcla de rocas aparece como un solo mineral. Lo translúcido en el mapa es una sola fecha o fechas que no coinciden: tomalo con cautela.',
+    'Dickita/nacrita se separan de la caolinita por la forma del doblete en 2,16–2,21 µm. Con el ruido de EMIT es una identificación probable, que hay que confirmar con DRX o con un espectrómetro de campo.',
+    'La mica blanca no distingue sericita hidrotermal de micas metamórficas o detríticas (Gr. Santa Elena, Fm. Villavicencio). Al O de las fallas Agua del Jagüel y Bonilla, la mica rica en Al es sospechosa de ser litológica.',
+    'Carbonatos (EMIT) salen en el caliche, la ganga de las vetas y los basaltos alterados: no indican alteración por sí solos.',
+    'La hematita de las capas rojas (Fms. Los Colorados y Agua de la Zorra) da la misma señal que la de una zona oxidada. El Fe²⁺ marca los basaltos triásicos y los carbonatos ferrosos: es litológico o de ganga.',
+    'ASTER cuarzo (AG100) es un promedio de 2000–2008 a ~100 m. Marca sílice libre: silicificación, venas de cuarzo, areniscas cuarzosas o riolitas por igual.',
+    'Ni alunita ni pirofilita aparecen en las dos fechas de EMIT: no hay argílica avanzada de alta sulfuración expuesta a escala de 60 m.',
+    'Estructuras de menos de ~40 m (S2) o ~120 m (EMIT) de ancho, como vetas y diques finos, no se ven. Vegetación y sombras fuertes quedan enmascaradas.',
+  ],
+  async cargar() {
+    if (this.listo) return this.listo;
+    this.listo = (async () => {
+      const r = await fetch('teledeteccion.bin'); if (!r.ok) throw new Error('No encontré teledeteccion.bin');
+      const buf = await r.arrayBuffer(), dv = new DataView(buf), hl = dv.getUint32(4, true);
+      const meta = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 8, hl))), base = 8 + hl;
+      this.capas = meta.capas.map(c => Object.assign({}, c, { url: URL.createObjectURL(new Blob([new Uint8Array(buf, base + c.off, c.len)], { type: 'image/webp' })) }));
+      return this;
+    })();
+    return this.listo;
+  },
+};
+const _sw = (c, t) => `<span class="ley-it"><i style="background:${c}"></i>${t}</span>`;
+const _conf = '<div class="ley-nota">Opaco: mismo resultado en 2025 y 2026. Translúcido: una sola fecha o fechas que no coinciden.</div>';
+const TELE_LEY = {
+  sintesis: _sw('#8b0000', 'Dickita/nacrita: argílica avanzada hipogénica probable') + _sw('#ff8c00', 'Caolinita: argílica') + _sw('#ffd000', 'Caolinita + mica: transición argílica–fílica') + _sw('#d63fd6', 'Mica blanca rica en Al y bien desarrollada: fílica probable (o mica metamórfica)') + _sw('#11733a', 'Clorita, epidoto, Fe²⁺: propilítica o rocas máficas') + _conf + '<div class="ley-nota">Combinala con ASTER cuarzo para ver qué zonas además están silicificadas.</div>',
+  emit_swir: _sw('#8b0000', 'Dickita/nacrita') + _sw('#ff8c00', 'Caolinita/halloysita') + _sw('#ffd000', 'Caolinita + mica') + _sw('#d63fd6', 'Mica blanca (sericita, illita)') + _sw('#8a5cff', 'Mica + clorita') + _sw('#7ccf5a', 'Esmectitas') + _sw('#11733a', 'Clorita, epidoto, anfíbol') + _sw('#1f78d1', 'Carbonatos') + _sw('#7fc4f0', 'Calcita + mica') + _sw('#e8e8e8', 'Yeso') + _sw('#c9b800', 'Jarosita') + _sw('#e3001b', 'Alunita, pirofilita (no aparecen)') + _conf,
+  emit_fe: _sw('#b3001b', 'Hematita') + _sw('#e09b1a', 'Goethita') + _sw('#f2e600', 'Jarosita y sulfatos de Fe') + _sw('#3b4aa8', 'Fe²⁺: máficos, carbonatos ferrosos') + _sw('#00c2a8', 'Minerales de Cu') + _conf,
+  emit_aloh: '<div class="ley-grad"><span>2201 nm</span><b style="background:linear-gradient(90deg,#30123b,#4686fb,#1ae4b6,#a2fc3c,#fabb39,#e4460a,#7a0403)"></b><span>2209 nm</span></div><div class="ley-nota">Posición del mínimo Al-OH de la mica blanca (media de las dos fechas). Azul: mica rica en Al (muscovita, paragonita), típica de fluidos más calientes y ácidos o de micas metamórficas. Rojo: fengita, más Fe-Mg, típica de halos distales. Sólo donde las dos fechas ven mica con banda > 0,035.</div>',
+  aster_cuarzo: '<div class="ley-grad"><span>mediana</span><b style="background:linear-gradient(90deg,#3b0f70,#8c2981,#de4968,#fe9f6d,#fcfdbf)"></b><span>máximo</span></div><div class="ley-nota">Índice B11²/(B10·B12) de la emisividad térmica. Sólo se muestra la mitad superior; claro = más cuarzo (silicificación, venas, areniscas cuarzosas o riolitas).</div>',
+  s2_color: 'Mediana de 9 escenas, 10 m. Sirve de mapa base sin bajar el satélite.',
+  s2_swir: 'Rocas con arcillas/OH en tonos claros verdosos o celestes; óxidos y capas rojas en naranja-rosa; basaltos oscuros.',
+  s2_cocientes: 'Rojo = arcillas/OH · verde = óxidos férricos · amarillo = ambos · azul = vegetación.',
+  s2_oh: _sw('rgba(236,100,214,.6)', '> p90') + _sw('rgb(176,0,170)', '> p97 del área'),
+  s2_fe: _sw('rgba(255,196,40,.6)', '> p90') + _sw('rgb(214,74,0)', '> p97 del área'),
+};
+const TELE_GRUPOS = [
+  ['Síntesis', ['sintesis']],
+  ['EMIT hiperespectral · 60 m', ['emit_swir', 'emit_fe', 'emit_aloh']],
+  ['ASTER térmico · ~100 m', ['aster_cuarzo']],
+  ['Sentinel-2 · 10–20 m', ['s2_color', 's2_swir', 's2_cocientes', 's2_oh', 's2_fe']],
+];
+const TELE_ATRIB = id => id.startsWith('s2') ? 'Sentinel-2: ESA Copernicus' : id.startsWith('emit') ? 'EMIT: NASA JPL / LP DAAC' : id.startsWith('aster') ? 'ASTER: NASA/METI' : 'EMIT + ASTER: NASA';
+
+// los botones flotantes del mapa quedan a la derecha: el popup se acomoda a su izquierda
+const TELE_POP = { maxWidth: 268, autoPanPaddingTopLeft: [8, 64], autoPanPaddingBottomRight: [72, 150] };
+
+/* Capas en el mapa */
+const TeleMapa = {
+  ov: {}, marcas: null,
+  init(map) {
+    map.createPane('tele'); map.getPane('tele').style.zIndex = 350;
+    this.marcas = L.layerGroup();
+    for (const d of TELE.depositos) {
+      L.marker([d.lat, d.lon], { icon: L.divIcon({ className: 'mk-dep', html: '<i></i><span>' + esc(d.nombre) + '</span>', iconSize: [16, 16], iconAnchor: [8, 8] }) })
+        .bindPopup(`<div class="pop"><b>${esc(d.nombre)}</b><div class="muted">${esc(d.tipo)} · depósito conocido</div><p>${esc(d.val)}</p><div class="pop-btns"><button class="btn sm primary" onclick="TeleMapa.ir(${d.lat},${d.lon},'${esc(d.nombre)}')">Ir aquí</button></div></div>`, TELE_POP).addTo(this.marcas);
+    }
+    for (const b of TELE.blancos) {
+      L.marker([b.lat, b.lon], { icon: L.divIcon({ className: 'mk-blanco', html: '<span><b>' + b.id + '</b></span>', iconSize: [28, 28], iconAnchor: [14, 14] }), zIndexOffset: 400 })
+        .bindPopup(`<div class="pop"><b>${b.id} · ${esc(b.nombre)}</b><div class="muted">${esc(b.cerca)}</div><p>${esc(b.dato)}</p><p><b>Hipótesis:</b> ${esc(b.hip)}</p><p><b>Qué mirar:</b> ${esc(b.ver)}</p><div class="pop-btns"><button class="btn sm primary" onclick="TeleMapa.ir(${b.lat},${b.lon},'${b.id}')">Ir aquí</button><button class="btn sm" onclick="Mapa.map.closePopup();Libreta.nueva({lat:${b.lat},lon:${b.lon},acc:null})">Estación acá</button></div></div>`, Object.assign({ maxHeight: 340 }, TELE_POP)).addTo(this.marcas);
+    }
+    TELE.cargar().then(() => { for (const c of TELE.capas) this.ov[c.id] = L.imageOverlay(c.url, c.bounds, { pane: 'tele', opacity: this.op(c.id), interactive: false, attribution: TELE_ATRIB(c.id), className: /^(emit|sintesis)/.test(c.id) ? 'tele-px' : '' }); this.aplicar(); }).catch(e => console.warn('tele', e));
+    this.aplicar();
+  },
+  op(id) { const o = Settings.get('teleOp') || {}; return o[id] ?? ({ s2_color: 1, s2_swir: 0.9, s2_cocientes: 0.85, s2_oh: 0.9, s2_fe: 0.9, sintesis: 0.9, emit_swir: 0.85, emit_fe: 0.8, emit_aloh: 0.9, aster_cuarzo: 0.85 }[id] ?? 0.85); },
+  setOp(id, v) { const o = Object.assign({}, Settings.get('teleOp') || {}); o[id] = v; Settings.set('teleOp', o); this.ov[id]?.setOpacity(v); },
+  aplicar() {
+    const m = Mapa.map, on = Settings.get('teleCapas') || [];
+    for (const [id, ov] of Object.entries(this.ov)) { if (on.includes(id)) { ov.addTo(m); } else ov.remove(); }
+    // orden: bases abajo, mapas de minerales encima, síntesis y anomalías arriba
+    for (const id of ['s2_color', 's2_swir', 's2_cocientes', 'aster_cuarzo', 'emit_fe', 'emit_swir', 'emit_aloh', 's2_fe', 's2_oh', 'sintesis']) if (on.includes(id) && this.ov[id]) this.ov[id].bringToFront();
+    if (Settings.get('teleMarcas')) this.marcas.addTo(m); else this.marcas.remove();
+  },
+  ir(lat, lon, nombre) {
+    Mapa.map.closePopup();
+    DB.put('importados', { id: 'tele-' + nombre, tipo: 'punto', nombre: nombre, archivo: 'Teledetección', coords: [[lat, lon]] }).then(() => { Mapa.dibujarImportados(); Settings.set('destino', 'i:tele-' + nombre); });
+  },
+  htmlCapas() {
+    const on = Settings.get('teleCapas') || [];
+    if (!TELE.capas) return '<p class="muted small">Cargando capas…</p>';
+    const por = Object.fromEntries(TELE.capas.map(c => [c.id, c]));
+    const fila = c => `<div class="capa"><div class="capa-top"><label class="sw"><input type="checkbox" data-tele="${c.id}" ${on.includes(c.id) ? 'checked' : ''}><span>${esc(c.nombre)}</span></label></div>
+      <input type="range" min="0.1" max="1" step="0.05" value="${this.op(c.id)}" data-teleop="${c.id}" aria-label="Opacidad">
+      <div class="muted small tele-ley">${TELE_LEY[c.id] || ''}</div></div>`;
+    return TELE_GRUPOS.map(([g, ids]) => { const cs = ids.map(i => por[i]).filter(Boolean); return cs.length ? `<div class="tele-grupo">${esc(g)}</div>` + cs.map(fila).join('') : ''; }).join('');
+  },
+  enlazar(body, rerender) {
+    $$('[data-tele]', body).forEach(i => i.onchange = () => { const s = new Set(Settings.get('teleCapas') || []); i.checked ? s.add(i.dataset.tele) : s.delete(i.dataset.tele); Settings.set('teleCapas', [...s]); this.aplicar(); });
+    $$('[data-teleop]', body).forEach(i => { i.oninput = () => this.ov[i.dataset.teleop]?.setOpacity(+i.value); i.onchange = () => this.setOp(i.dataset.teleop, +i.value); });
+    const mk = $('#tele-mk', body); if (mk) mk.onchange = () => { Settings.set('teleMarcas', mk.checked); this.aplicar(); };
+    if (!TELE.capas) TELE.cargar().then(() => rerender && rerender());
+  },
+};
+
 /* ============ EXIF: escribir y leer la ubicación GPS en fotos JPEG ============ */
 const Exif = {
   ascii: s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\x20-\x7e]/g, '?'),
@@ -2029,8 +2453,8 @@ const Libreta = {
     for (const e of est) {
       const d = dia(e.fecha);
       if (d !== cur) { cur = d; html += '<div class="lista-dia">' + esc(fmtFecha(e.fecha).split(' ').slice(0, 2).join(' ')) + '</div>'; }
-      const nm = meds.filter(m => m.estacionId === e.id).length, nf = media.filter(m => m.estacionId === e.id && m.tipo === 'foto').length, nc = media.filter(m => m.estacionId === e.id && m.tipo === 'croquis').length;
-      html += `<button class="est-card" data-id="${e.id}"><div class="est-cod">${esc(e.codigo)}</div><div class="est-main"><div class="est-l1">${esc(e.unidad || 'Sin unidad')}${e.parada ? ' <span class="chip">' + esc(e.parada) + '</span>' : ''}</div><div class="est-l2">${esc((e.desc || '').slice(0, 90) || 'Sin descripción')}</div><div class="est-l3">${esc(fmtFecha(e.fecha).split(' ')[2] || '')}${e.lat == null ? ' · ⚠ sin coordenadas' : ''}${nm ? ' · ' + nm + ' med.' : ''}${nf ? ' · ' + nf + (nf === 1 ? ' foto' : ' fotos') : ''}${nc ? ' · ' + nc + ' croquis' : ''}</div></div></button>`;
+      const nm = meds.filter(m => m.estacionId === e.id).length, nf = media.filter(m => m.estacionId === e.id && m.tipo === 'foto').length, nc = media.filter(m => m.estacionId === e.id && m.tipo === 'croquis').length, na = media.filter(m => m.estacionId === e.id && m.tipo === 'audio').length;
+      html += `<button class="est-card" data-id="${e.id}"><div class="est-cod">${esc(e.codigo)}</div><div class="est-main"><div class="est-l1">${esc(e.unidad || 'Sin unidad')}${e.parada ? ' <span class="chip">' + esc(e.parada) + '</span>' : ''}</div><div class="est-l2">${esc((e.desc || '').slice(0, 90) || 'Sin descripción')}</div><div class="est-l3">${esc(fmtFecha(e.fecha).split(' ')[2] || '')}${e.lat == null ? ' · ⚠ sin coordenadas' : ''}${nm ? ' · ' + nm + ' med.' : ''}${nf ? ' · ' + nf + (nf === 1 ? ' foto' : ' fotos') : ''}${nc ? ' · ' + nc + ' croquis' : ''}${na ? ' · ' + na + (na === 1 ? ' audio' : ' audios') : ''}</div></div></button>`;
     }
     cont.innerHTML = html;
     $$('.est-card', cont).forEach(b => b.onclick = () => this.abrir(b.dataset.id));
@@ -2077,6 +2501,8 @@ const Libreta = {
           <div class="row-btns"><button class="btn" id="ed-med-b">◎ Medir con el celu</button><button class="btn" id="ed-med-m">✎ Anotar medición</button></div></section>
         <section class="ed-sec"><div class="ed-sec-h"><h4>Fotos</h4></div><div class="thumbs" id="ed-fotos"></div>
           <div class="row-btns"><label class="btn"><input type="file" accept="image/*" capture="environment" id="ed-cam" hidden>📷 Sacar foto</label><label class="btn ghost"><input type="file" accept="image/*" multiple id="ed-gal" hidden>De la galería</label></div></section>
+        <section class="ed-sec"><div class="ed-sec-h"><h4>Notas de voz</h4></div><div id="ed-voz"></div>
+          <div class="row-btns"><button class="btn" id="ed-rec">🎙 Grabar nota de voz</button></div></section>
         <section class="ed-sec"><div class="ed-sec-h"><h4>Croquis</h4></div><div class="thumbs" id="ed-croq"></div>
           <div class="row-btns"><button class="btn" id="ed-croq-n">✏ Nuevo croquis</button></div></section>
         <p class="muted small center">Se guarda solo · creada ${esc(fmtFecha(e.creado))}</p>
@@ -2087,7 +2513,7 @@ const Libreta = {
     ['#ed-cod', '#ed-par', '#ed-uni', '#ed-desc', '#ed-mue'].forEach(q => { $(q, el).addEventListener('input', guardar); $(q, el).addEventListener('change', guardar); });
     const renderLoc = () => {
       const c = fmtCoord(e.lat, e.lon);
-      $('#ed-loc', el).innerHTML = `<div class="loc-main mono">${esc(c.main)}</div><div class="muted small">${esc(c.sub)}${e.acc != null ? ' · ±' + Math.round(e.acc) + ' m' : ''}${e.alt != null ? ' · ' + Math.round(e.alt) + ' m s.n.m.' : ''}</div>
+      $('#ed-loc', el).innerHTML = `<div class="loc-main mono">${esc(c.main)}</div><div class="muted small">${esc(c.sub)}${e.acc != null ? ' · ±' + Math.round(e.acc) + ' m' : ''}${e.alt != null ? ' · GPS ' + Math.round(e.alt) + ' m s.n.m.' : ''}${e.lat != null && Relieve.cota(e.lat, e.lon) != null ? ' · cota del modelo ≈ ' + Math.round(Relieve.cota(e.lat, e.lon)) + ' m' : ''}</div>
         <div class="row-btns wrap"><button class="btn sm" id="ed-gps">◎ GPS actual</button><button class="btn sm ghost" id="ed-mapa">Ver en mapa</button><button class="btn sm ghost" id="ed-man">Escribir</button></div>`;
       $('#ed-gps', el).onclick = async () => { toast('Buscando posición…', 0); const p = Geo.pos && Date.now() - Geo.pos.t < 10000 ? Geo.pos : await Geo.una(5000); if (p) { setPos(p); toast('Posición actualizada (±' + Math.round(p.acc) + ' m)'); } else toast('Sin señal GPS por ahora'); };
       $('#ed-mapa', el).onclick = () => { if (e.lat == null) return toast('La estación no tiene coordenadas'); Sheet.stack.slice().forEach(x => x.close()); Mapa.irA(e.lat, e.lon, 17); };
@@ -2111,6 +2537,8 @@ const Libreta = {
       }
     };
     renderMedia();
+    Voz.render($('#ed-voz', el), e);
+    $('#ed-rec', el).onclick = async () => { const m = await Voz.grabar(e); if (m && vivo) Voz.render($('#ed-voz', el), e); };
     // Ubicación de cada foto: GPS al momento de sacarla > ubicación guardada en la propia foto > estación
     let fixAlTocar = null;
     $('#ed-cam', el).closest('label').addEventListener('click', () => { fixAlTocar = Geo.pos && Date.now() - Geo.pos.t < 60000 ? Object.assign({}, Geo.pos) : null; if (!Geo.on) Geo.start(); });
@@ -2348,6 +2776,509 @@ const Estereo = {
   },
 };
 
+/* ============ Notas de voz ============ */
+const Voz = {
+  mime() {
+    if (!window.MediaRecorder) return null;
+    for (const t of ['audio/webm;codecs=opus', 'audio/ogg;codecs=opus', 'audio/mp4', 'audio/webm']) if (MediaRecorder.isTypeSupported(t)) return t;
+    return '';
+  },
+  ext(mime) { return /ogg/.test(mime) ? '.ogg' : /mp4|aac|m4a/.test(mime) ? '.m4a' : '.webm'; },
+  fmtDur(s) { s = Math.round(s || 0); return Math.floor(s / 60) + ':' + pad(s % 60); },
+  /** Abre el panel de grabación. Resuelve con el registro guardado o null. */
+  async grabar(est) {
+    const mime = this.mime();
+    if (mime == null || !navigator.mediaDevices?.getUserMedia) { toast('Este navegador no permite grabar audio'); return null; }
+    let stream;
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } }); }
+    catch (e) { toast(e.name === 'NotAllowedError' ? 'Sin permiso para el micrófono: habilitalo en los permisos del sitio' : 'No pude usar el micrófono', 4500); return null; }
+    const rec = new MediaRecorder(stream, mime ? { mimeType: mime, audioBitsPerSecond: 32000 } : undefined);
+    const chunks = []; rec.ondataavailable = ev => { if (ev.data && ev.data.size) chunks.push(ev.data); };
+    let lock = null; try { lock = await navigator.wakeLock?.request('screen'); } catch (e) { }
+    // medidor de nivel
+    let ac, an, raf; try { ac = new (window.AudioContext || window.webkitAudioContext)(); an = ac.createAnalyser(); an.fftSize = 512; ac.createMediaStreamSource(stream).connect(an); } catch (e) { }
+    const ov = document.createElement('div'); ov.className = 'rec-ov';
+    ov.innerHTML = `<div class="rec-panel" role="dialog" aria-label="Grabando nota de voz"><div class="rec-top"><span class="rec-dot"></span><span>Grabando · ${esc(est.codigo)}</span></div>
+      <div class="rec-t mono" id="rec-t">0:00</div><div class="rec-vu"><div id="rec-vu"></div></div>
+      <div class="row-btns"><button class="btn ghost big" id="rec-x">Descartar</button><button class="btn primary big" id="rec-ok">■ Guardar</button></div></div>`;
+    document.body.appendChild(ov);
+    const t0 = Date.now(), MAX = 10 * 60;
+    const tick = () => {
+      const s = (Date.now() - t0) / 1000; $('#rec-t', ov).textContent = this.fmtDur(s);
+      if (an) { const d = new Uint8Array(an.fftSize); an.getByteTimeDomainData(d); let m = 0; for (const v of d) m = Math.max(m, Math.abs(v - 128)); $('#rec-vu', ov).style.width = Math.min(100, m / 1.1) + '%'; }
+      if (s >= MAX) $('#rec-ok', ov).click(); else raf = requestAnimationFrame(tick);
+    };
+    rec.start(1000); tick();
+    const fin = () => { cancelAnimationFrame(raf); stream.getTracks().forEach(t => t.stop()); try { ac && ac.close(); } catch (e) { } try { lock && lock.release(); } catch (e) { } ov.remove(); };
+    return new Promise(res => {
+      $('#rec-x', ov).onclick = async () => { if (Date.now() - t0 > 5000 && !(await confirmar('¿Descartar la grabación?', 'Descartar', true))) return; rec.onstop = () => { fin(); res(null); }; rec.stop(); };
+      $('#rec-ok', ov).onclick = () => {
+        rec.onstop = async () => {
+          fin();
+          const dur = (Date.now() - t0) / 1000, tipo = rec.mimeType || mime || 'audio/webm';
+          const blob = new Blob(chunks, { type: tipo });
+          if (!blob.size) { toast('La grabación quedó vacía'); return res(null); }
+          const p = Geo.pos && Date.now() - Geo.pos.t < 60000 ? Geo.pos : null;
+          const m = { id: uid(), estacionId: est.id, tipo: 'audio', blob, mime: tipo, dur: Math.round(dur), fecha: nowISO(), nota: '', lat: p ? p.lat : est.lat, lon: p ? p.lon : est.lon };
+          await DB.put('media', m); await pedirPersistencia();
+          toast('Nota de voz guardada (' + this.fmtDur(dur) + ')'); res(m);
+        };
+        rec.stop();
+      };
+    });
+  },
+  /** Lista de notas de voz de una estación */
+  async render(box, est) {
+    box.querySelectorAll('audio').forEach(a => { a.pause(); URL.revokeObjectURL(a.src); });
+    const ms = (await DB.byEst('media', est.id)).filter(m => m.tipo === 'audio').sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+    box.innerHTML = ms.length ? ms.map((m, i) => `<div class="voz" data-id="${m.id}"><div class="voz-h"><b>V${pad(i + 1)}</b><span class="muted small">${esc(this.fmtDur(m.dur))} · ${esc(fmtFecha(m.fecha).split(' ')[2] || '')}</span><button class="icon-btn sm" data-vdel aria-label="Borrar nota de voz">✕</button></div>
+      <audio controls preload="metadata" src="${URL.createObjectURL(m.blob)}"></audio>
+      <input class="voz-nota" data-vnota value="${esc(m.nota || '')}" placeholder="Título (opcional): de qué habla"></div>`).join('') : '<p class="muted small">Sin notas de voz.</p>';
+    $$('.voz', box).forEach(div => {
+      const id = div.dataset.id, au = $('audio', div);
+      // Chrome graba webm sin duración: se fuerza el cálculo para que la barra del reproductor funcione
+      au.addEventListener('loadedmetadata', () => { if (au.duration === Infinity) { au.currentTime = 1e101; au.addEventListener('timeupdate', function f() { au.removeEventListener('timeupdate', f); au.currentTime = 0; }); } });
+      $('[data-vdel]', div).onclick = async () => { if (await confirmar('¿Borrar esta nota de voz?', 'Borrar', true)) { await DB.del('media', id); this.render(box, est); } };
+      $('[data-vnota]', div).oninput = debounce(async ev => { const m = await DB.get('media', id); if (m) { m.nota = ev.target.value; await DB.put('media', m); } }, 400);
+    });
+  },
+};
+
+/* ============ Columna estratigráfica: definiciones (convenciones tipo SedLog) ============ */
+const GRANOS = [ // índice = ancho en el dibujo
+  { id: 'arc', ab: 'Ar', label: 'Arcilla', sl: 'clay' }, { id: 'lim', ab: 'Li', label: 'Limo', sl: 'silt' },
+  { id: 'amf', ab: 'mf', label: 'Arena muy fina', sl: 'vf' }, { id: 'af', ab: 'f', label: 'Arena fina', sl: 'f' },
+  { id: 'am', ab: 'm', label: 'Arena media', sl: 'm' }, { id: 'ag', ab: 'g', label: 'Arena gruesa', sl: 'c' },
+  { id: 'amg', ab: 'mg', label: 'Arena muy gruesa', sl: 'vc' }, { id: 'sab', ab: 'Sá', label: 'Sábulo (gránulo)', sl: 'granule' },
+  { id: 'gj', ab: 'Gj', label: 'Guija', sl: 'pebble' }, { id: 'gu', ab: 'Gu', label: 'Guijarro', sl: 'cobble' },
+  { id: 'bl', ab: 'Bl', label: 'Bloque', sl: 'boulder' },
+];
+const GI = Object.fromEntries(GRANOS.map((g, i) => [g.id, i]));
+
+/* id, nombre, relleno, patrón, nombre SedLog, grano por defecto, ígnea */
+const LITOS = [
+  ['cong', 'Conglomerado', '#f0c987', 'circ', 'Conglomerate', 'gj'],
+  ['brecha', 'Brecha', '#e8b77c', 'tri', 'Breccia', 'gj'],
+  ['arenisca', 'Arenisca', '#f3e3a0', 'dots', 'Sandstone', 'am'],
+  ['aren_tob', 'Arenisca tobácea', '#efe4c2', 'dotsv', 'Sandstone', 'am'],
+  ['limolita', 'Limolita', '#d4dbb3', 'silt', 'Siltstone', 'lim'],
+  ['pelita', 'Pelita / lutita', '#c3c9c5', 'hdash', 'Shale', 'arc'],
+  ['fangolita', 'Fangolita', '#cdc5b6', 'mud', 'Mudstone', 'arc'],
+  ['marga', 'Marga', '#cfe1d1', 'marl', 'Marl', 'arc'],
+  ['caliza', 'Caliza', '#acc9e0', 'brick', 'Limestone', 'lim'],
+  ['toba', 'Toba', '#f2cde0', 'vv', 'Tuff', 'af'],
+  ['tufita', 'Tufita', '#e8d8e6', 'vdots', 'Tuff', 'af'],
+  ['carbon', 'Carbón / pelita carbonosa', '#3b3631', 'solid', 'Coal', 'arc'],
+  ['diamictita', 'Diamictita', '#cdb99c', 'diam', 'Diamictite', 'ag'],
+  ['basalto', 'Basalto (colada)', '#959aa1', 'basalt', 'Basalt', 'am', true],
+  ['filon', 'Filón capa / intrusivo básico', '#a7948f', 'plus', 'Dolerite', 'am', true],
+  ['andesita', 'Andesita / dacita', '#e2a9a2', 'cross', 'Andesite', 'am', true],
+  ['cubierto', 'Cubierto', '#ffffff', 'cover', 'Covered', 'af'],
+].map(a => ({ id: a[0], label: a[1], fill: a[2], pat: a[3], sl: a[4], grano: a[5], ignea: !!a[6] }));
+const LITO = Object.fromEntries(LITOS.map(l => [l.id, l]));
+
+const CONTACTOS = [['neto', 'Neto', 'Sharp'], ['erosivo', 'Erosivo', 'Erosion'], ['gradual', 'Gradual', 'Gradational'], ['inferido', 'Inferido / cubierto', '']];
+
+/* Símbolos de estructuras (16×16, trazo en currentColor) */
+const ESTRUCTURAS = [
+  ['artesa', 'Estratif. entrecruzada en artesa', 'Trough cross-bedding', '<path d="M1 4 Q8 13 15 4 M3 8 Q8 15 13 8"/>'],
+  ['planar', 'Estratif. entrecruzada planar', 'Planar cross-bedding', '<path d="M1 3 H15 M1 13 H15 M2 13 L6 3 M6 13 L10 3 M10 13 L14 3"/>'],
+  ['horiz', 'Laminación horizontal', 'Horizontal lamination', '<path d="M1 4 H15 M1 8 H15 M1 12 H15"/>'],
+  ['bajoang', 'Estratif. de bajo ángulo', 'Low-angle cross-bedding', '<path d="M1 12 L15 8 M1 8 L15 4 M1 14 H15"/>'],
+  ['ondulas', 'Óndulas / lam. ondulítica', 'Ripple cross-lamination', '<path d="M1 9 Q3 5 5 9 T9 9 T13 9 T17 9"/>'],
+  ['masiva', 'Masiva', 'Massive', '<rect x="3" y="4" width="10" height="8" rx="1"/>'],
+  ['gradnorm', 'Gradación normal', 'Normal grading', '<path d="M3 14 H13 L8 2 Z"/>'],
+  ['gradinv', 'Gradación inversa', 'Reverse grading', '<path d="M3 2 H13 L8 14 Z"/>'],
+  ['imbric', 'Imbricación', 'Imbrication', '<ellipse cx="5" cy="9" rx="3.6" ry="1.6" transform="rotate(-30 5 9)"/><ellipse cx="11.5" cy="9" rx="3.6" ry="1.6" transform="rotate(-30 11.5 9)"/>'],
+  ['bioturb', 'Bioturbación', 'Bioturbation', '<path d="M5 1 q3 3 0 7 t0 7 M11 1 q-3 3 0 7 t0 7"/>'],
+  ['grietas', 'Grietas de desecación', 'Desiccation cracks', '<path d="M1 3 H15 M2 3 L5 13 L8 3 M8 3 L11 13 L14 3"/>'],
+  ['calcos', 'Calcos de carga', 'Load casts', '<path d="M1 6 H15 M2 6 q2 7 4 0 M9 6 q2 7 4 0"/>'],
+  ['convol', 'Deformación sinsedimentaria', 'Convolute lamination', '<path d="M1 11 C4 1 6 15 8 8 S12 1 15 9"/>'],
+  ['raices', 'Raíces / paleosuelo', 'Rootlets', '<path d="M8 1 V15 M8 7 L4 12 M8 9 L12 14 M8 5 L11 8"/>'],
+  ['veg', 'Restos vegetales', 'Plant fragments', '<path d="M3 13 Q3 3 13 3 Q13 13 3 13 Z M3 13 L11 5"/>'],
+  ['tronco', 'Troncos fósiles', 'Wood fragments', '<rect x="1.5" y="5.5" width="12" height="5.5" rx="2.7"/><ellipse cx="13" cy="8.25" rx="1.5" ry="2.7"/>'],
+  ['fosil', 'Fósiles (invertebrados)', 'Shells', '<path d="M2 12 Q8 -1 14 12 Z M8 12 V4 M5 12 L6.5 5 M11 12 L9.5 5"/>'],
+  ['nodulos', 'Nódulos / concreciones', 'Nodules', '<ellipse cx="8" cy="8" rx="6" ry="3.5"/>'],
+  ['amigd', 'Amígdalas / vesículas', 'Vesicles', '<circle cx="4" cy="5" r="1.8"/><circle cx="11" cy="6" r="1.8"/><circle cx="7" cy="11.5" r="1.8"/>'],
+  ['columnar', 'Disyunción columnar', 'Columnar jointing', '<path d="M3 2 V14 M8 2 V14 M13 2 V14 M1 2 H15"/>'],
+].map(a => ({ id: a[0], label: a[1], sl: a[2], svg: a[3] }));
+const ESTR = Object.fromEntries(ESTRUCTURAS.map(e => [e.id, e]));
+const icoEstr = (id, s = 16) => `<svg viewBox="0 0 16 16" width="${s}" height="${s}" class="ico-estr" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">${ESTR[id]?.svg || ''}</g></svg>`;
+
+/* Patrones SVG para el relleno de cada litología */
+function patronesSVG(pref = 'p') {
+  const P = (id, w, h, body, bg) => `<pattern id="${pref}-${id}" patternUnits="userSpaceOnUse" width="${w}" height="${h}"><rect width="${w}" height="${h}" fill="${bg}"/>${body}</pattern>`;
+  const k = '#2b2621';
+  let out = '';
+  for (const l of LITOS) {
+    const bg = l.fill;
+    const g = {
+      circ: `<circle cx="4" cy="4" r="2.6" fill="none" stroke="${k}" stroke-width=".8"/><circle cx="11" cy="9" r="2.1" fill="none" stroke="${k}" stroke-width=".8"/>`,
+      tri: `<path d="M2 7 L5 2 L8 7 Z M9 12 L12 8 L14 12 Z" fill="none" stroke="${k}" stroke-width=".8"/>`,
+      dots: `<circle cx="2" cy="2" r=".85" fill="${k}"/><circle cx="6" cy="6" r=".85" fill="${k}"/>`,
+      dotsv: `<circle cx="2" cy="2" r=".8" fill="${k}"/><path d="M6 6 l1.5 3 l1.5 -3" fill="none" stroke="${k}" stroke-width=".7"/>`,
+      silt: `<path d="M1 3 H6" stroke="${k}" stroke-width=".8"/><circle cx="9" cy="3" r=".7" fill="${k}"/><path d="M5 8 H10" stroke="${k}" stroke-width=".8"/><circle cx="2" cy="8" r=".7" fill="${k}"/>`,
+      hdash: `<path d="M1 2.5 H8 M7 6.5 H14" stroke="${k}" stroke-width=".8"/>`,
+      mud: `<path d="M1 2.5 H4 M7 2.5 H10 M4 6.5 H7 M10 6.5 H13" stroke="${k}" stroke-width=".8"/>`,
+      marl: `<path d="M0 .5 H16 M0 8.5 H16 M8 .5 V8.5" stroke="${k}" stroke-width=".7"/><path d="M2 4.5 H6 M10 4.5 H14" stroke="${k}" stroke-width=".7"/>`,
+      brick: `<path d="M0 .5 H16 M0 4.5 H16 M4 .5 V4.5 M12 4.5 V8.5" stroke="${k}" stroke-width=".7"/>`,
+      vv: `<path d="M1 2 l1.6 3.2 l1.6 -3.2 M7 7 l1.6 3.2 l1.6 -3.2" fill="none" stroke="${k}" stroke-width=".75"/>`,
+      vdots: `<path d="M1 2 l1.6 3.2 l1.6 -3.2" fill="none" stroke="${k}" stroke-width=".75"/><circle cx="9" cy="8" r=".75" fill="${k}"/>`,
+      solid: '',
+      diam: `<path d="M1 3 H5 M8 9 H12" stroke="${k}" stroke-width=".7"/><circle cx="10" cy="3" r="1.6" fill="none" stroke="${k}" stroke-width=".7"/><path d="M2 10 L4 7 L5.5 10 Z" fill="none" stroke="${k}" stroke-width=".7"/>`,
+      basalt: `<path d="M1 2 l1.5 3 l1.5 -3 M6 7 l1.5 3 l1.5 -3" fill="none" stroke="#1d1b19" stroke-width=".9"/>`,
+      plus: `<path d="M3 1 V5 M1 3 H5 M9 6 V10 M7 8 H11" stroke="${k}" stroke-width=".8"/>`,
+      cross: `<path d="M1.5 1.5 L4.5 4.5 M4.5 1.5 L1.5 4.5 M7.5 6.5 L10.5 9.5 M10.5 6.5 L7.5 9.5" stroke="${k}" stroke-width=".8"/>`,
+      cover: `<path d="M0 6 L6 0" stroke="#b9b1a3" stroke-width=".7"/>`,
+    }[l.pat];
+    const [w, h] = { circ: [14, 12], tri: [15, 13], dots: [8, 8], dotsv: [11, 11], silt: [11, 10], hdash: [14, 8], mud: [14, 8], marl: [16, 8], brick: [16, 8], vv: [12, 10], vdots: [11, 10], solid: [4, 4], diam: [14, 12], basalt: [10, 10], plus: [12, 10], cross: [12, 11], cover: [6, 6] }[l.pat];
+    out += P(l.id, w, h, g, bg);
+  }
+  return out;
+}
+
+/* ============ Columna estratigráfica: dibujo ============ */
+const ColDraw = {
+  ESCALAS: { 50: 75.59, 100: 37.8, 200: 18.9, 500: 7.56, 1000: 3.78 }, // px por metro a 96 dpi
+  total(col) { return col.capas.reduce((s, c) => s + (Number(c.esp) || 0), 0); },
+  ppm(col) {
+    const t = this.total(col) || 1;
+    if (col.escala && col.escala !== 'auto') return this.ESCALAS[col.escala];
+    for (const e of [50, 100, 200, 500, 1000]) if (t * this.ESCALAS[e] <= 1400) return this.ESCALAS[e];
+    return 1400 / t;
+  },
+  escalaTxt(col) { const p = this.ppm(col), e = Object.entries(this.ESCALAS).find(([, v]) => Math.abs(v - p) < 1e-6); return e ? '1:' + e[0] : 'ajustada'; },
+  ancho: i => 24 + i * 14,
+  /** Devuelve el SVG completo de la columna */
+  svg(col, { pref = 'cp' } = {}) {
+    const fmtM = v => (Math.round(v * 100) / 100).toString().replace('.', ',');
+    const capas = col.capas, total = this.total(col), ppm = this.ppm(col);
+    const PAD = 16, AX = 44, X0 = PAD + AX, GW = this.ancho(10) + 8;
+    const XE = X0 + GW + 10, XF = XE + 76, XP = XF + 46, XN = XP + 36, NW = 210, W = XN + NW + PAD;
+    const yTop = PAD + 62 + 22, H = Math.max(total * ppm, 2), yBase = yTop + H;
+    const ink = '#1f1b16', mut = '#6d6356';
+    let s = `<svg xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, Roboto, sans-serif" `;
+    let body = '', y = yBase, prevW = null;
+    const usadosL = new Set(), usadosE = new Set();
+    // capas
+    const geo = [];
+    for (const c of capas) {
+      const h = (Number(c.esp) || 0) * ppm, lit = LITO[c.lit] || LITO.arenisca;
+      const gb = GI[c.gBase] ?? GI[lit.grano], gt = GI[c.gTope] ?? gb;
+      const wb = lit.id === 'cubierto' ? this.ancho(3) : this.ancho(gb), wt = lit.id === 'cubierto' ? this.ancho(3) : this.ancho(gt);
+      geo.push({ c, lit, yb: y, yt: y - h, h, wb, wt });
+      usadosL.add(lit.id); (c.estr || []).forEach(e => usadosE.add(e));
+      y -= h;
+    }
+    geo.forEach((g, i) => {
+      const { c, lit, yb, yt, h, wb, wt } = g;
+      body += `<path d="M${X0} ${yb} H${X0 + wb} L${X0 + wt} ${yt} H${X0} Z" fill="url(#${pref}-${lit.id})"/>`;
+      body += `<path d="M${X0 + wb} ${yb} L${X0 + wt} ${yt}" stroke="${ink}" stroke-width="1" fill="none"/>`;
+      if (lit.id === 'cubierto' && h >= 11) body += `<text x="${X0 + 6}" y="${(yb + yt) / 2 + 3}" font-size="9" font-style="italic" fill="${mut}">cubierto</text>`;
+      // contacto basal
+      const wbase = Math.max(wb, i > 0 ? geo[i - 1].wt : wb), x1 = X0 + wbase;
+      const ct = i === 0 ? 'neto' : (c.contacto || 'neto');
+      if (ct === 'erosivo') { let d = `M${X0} ${yb}`; for (let x = X0; x < x1; x += 8) { const xe = Math.min(x + 8, x1); d += ` Q${x + 2} ${yb + 2.6} ${(x + xe) / 2} ${yb} T${xe} ${yb}`; } body += `<path d="${d}" stroke="${ink}" stroke-width="1.6" fill="none"/>`; }
+      else if (ct === 'gradual') body += `<path d="M${X0} ${yb} H${x1}" stroke="${ink}" stroke-width="1" stroke-dasharray="5 3" fill="none"/>`;
+      else if (ct === 'inferido') body += `<path d="M${X0} ${yb} H${x1}" stroke="${ink}" stroke-width="1" stroke-dasharray="1.5 2.5" fill="none"/>`;
+      else body += `<path d="M${X0} ${yb} H${x1}" stroke="${ink}" stroke-width="1" fill="none"/>`;
+      // estructuras
+      const es = (c.estr || []).filter(e => ESTR[e]);
+      if (es.length && h >= 4) {
+        const sz = Math.min(16, Math.max(9, h - 2)), porFila = 4, filas = Math.max(1, Math.min(Math.ceil(es.length / porFila), Math.floor((h - 2) / (sz + 2)) || 1));
+        const mostrar = es.slice(0, porFila * filas);
+        mostrar.forEach((e, k) => { const fx = k % porFila, fy = Math.floor(k / porFila); const cy = (yb + yt) / 2 - (filas * (sz + 2)) / 2 + fy * (sz + 2); body += `<g transform="translate(${XE + fx * (sz + 3)} ${cy}) scale(${sz / 16})" fill="none" stroke="${ink}" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">${ESTR[e].svg}</g>`; });
+      }
+      if (c.facies && h >= 8) body += `<text x="${XF + 4}" y="${(yb + yt) / 2 + 3.5}" font-size="10" font-weight="700" fill="${ink}">${esc(c.facies)}</text>`;
+      if (c.paleo !== '' && c.paleo != null && !isNaN(Number(c.paleo))) {
+        const cx = XP + 16, cy = (yb + yt) / 2;
+        body += `<g transform="translate(${cx} ${cy}) rotate(${Number(c.paleo)})" stroke="${ink}" stroke-width="1.3" fill="none" stroke-linecap="round"><path d="M0 6 V-7 M-3 -3 L0 -7 L3 -3"/></g>`;
+      }
+    });
+    // notas y muestras (evitando superposición, de la base hacia arriba)
+    let libre = Infinity;
+    geo.forEach(g => {
+      const t = [g.c.muestra ? '◆ ' + g.c.muestra : '', g.c.notas || ''].filter(Boolean).join('  ');
+      if (!t) return;
+      const mid = (g.yb + g.yt) / 2, yy = Math.min(mid + 3, libre - 12);
+      if (yy < yTop - 4) return;
+      libre = yy - 0;
+      const txt = t.length > 44 ? t.slice(0, 42) + '…' : t;
+      if (Math.abs(yy - 3 - mid) > 2) body += `<path d="M${XN - 4} ${mid} L${XN + 2} ${yy - 3}" stroke="${mut}" stroke-width=".6"/>`;
+      body += `<text x="${XN + 4}" y="${yy}" font-size="9.5" fill="${ink}">${esc(txt)}</text>`;
+    });
+    // eje vertical
+    const pasos = [0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100, 200];
+    const mayor = pasos.find(p => p * ppm >= 36) || 500, menor = mayor / 5;
+    let ax = `<path d="M${X0} ${yTop} V${yBase}" stroke="${ink}" stroke-width="1.2"/>`;
+    if (menor * ppm >= 5) for (let v = 0; v <= total + 1e-9; v += menor) ax += `<path d="M${X0 - 3} ${yBase - v * ppm} H${X0}" stroke="${ink}" stroke-width=".6"/>`;
+    for (let v = 0; v <= total + 1e-9; v += mayor) ax += `<path d="M${X0 - 7} ${yBase - v * ppm} H${X0}" stroke="${ink}" stroke-width="1"/><text x="${X0 - 10}" y="${yBase - v * ppm + 3.5}" font-size="10" text-anchor="end" fill="${ink}">${fmtM(v)}</text>`;
+    ax += `<text x="${X0 - 10}" y="${yTop - 8}" font-size="10" text-anchor="end" fill="${mut}">m</text>`;
+    ax += `<path d="M${X0} ${yTop} H${X0 + (geo.length ? geo[geo.length - 1].wt : 40)}" stroke="${ink}" stroke-width="1"/>`;
+    // escala granulométrica
+    let gs = `<path d="M${X0} ${yBase} H${X0 + this.ancho(10)}" stroke="${ink}" stroke-width=".8"/>`;
+    GRANOS.forEach((g, i) => { const x = X0 + this.ancho(i); gs += `<path d="M${x} ${yBase} V${yBase + 5}" stroke="${ink}" stroke-width=".8"/><text x="${x}" y="${yBase + 15}" font-size="8.5" text-anchor="middle" fill="${ink}">${g.ab}</text>`; });
+    const grp = (a, b, t) => { const xa = X0 + this.ancho(a) - 5, xb = X0 + this.ancho(b) + 5; return `<path d="M${xa} ${yBase + 20} V${yBase + 23} H${xb} V${yBase + 20}" stroke="${mut}" stroke-width=".7" fill="none"/><text x="${(xa + xb) / 2}" y="${yBase + 33}" font-size="8.5" text-anchor="middle" fill="${mut}">${t}</text>`; };
+    gs += grp(0, 1, 'pelita') + grp(2, 6, 'arena') + grp(7, 10, 'grava');
+    // encabezados
+    const head = `<text x="${XE}" y="${yTop - 8}" font-size="9" fill="${mut}">Estructuras</text><text x="${XF + 4}" y="${yTop - 8}" font-size="9" fill="${mut}">Facies</text><text x="${XP + 2}" y="${yTop - 8}" font-size="9" fill="${mut}">Paleoc.</text><text x="${XN + 4}" y="${yTop - 8}" font-size="9" fill="${mut}">Muestras / notas</text>`;
+    const loc = c => c && c.lat != null ? coordLine(c.lat, c.lon, 'utm') : null;
+    const sub = [col.unidad, 'Espesor ' + fmtM(total) + ' m', 'Escala vertical ' + this.escalaTxt(col), col.fecha ? fmtFecha(col.fecha).split(' ').slice(0, 2).join(' ') : ''].filter(Boolean).join(' · ');
+    const sub2 = [loc(col.base) && 'Base: ' + loc(col.base), loc(col.tope) && 'Tope: ' + loc(col.tope), col.actitud && 'Actitud: ' + col.actitud].filter(Boolean).join(' · ');
+    const tit = `<text x="${PAD}" y="${PAD + 18}" font-size="18" font-weight="700" font-family="Georgia, 'Times New Roman', serif" fill="${ink}">${esc(col.nombre || 'Columna')}</text><text x="${PAD}" y="${PAD + 36}" font-size="11" fill="${mut}">${esc(sub)}</text><text x="${PAD}" y="${PAD + 51}" font-size="10" fill="${mut}">${esc(sub2)}${col.base?.lat != null || col.tope?.lat != null ? ' (UTM 19S)' : ''}</text>`;
+    // leyenda
+    let ly = yBase + 52, lg = `<text x="${PAD}" y="${ly}" font-size="10" font-weight="700" fill="${ink}">Referencias</text>`; ly += 10;
+    let lx = PAD;
+    const itemsL = [...usadosL].map(id => LITO[id]);
+    itemsL.forEach(l => { const w = 24 + l.label.length * 5.6; if (lx + w > W - PAD) { lx = PAD; ly += 20; } lg += `<rect x="${lx}" y="${ly}" width="22" height="12" fill="url(#${pref}-${l.id})" stroke="${ink}" stroke-width=".6"/><text x="${lx + 27}" y="${ly + 10}" font-size="9.5" fill="${ink}">${esc(l.label)}</text>`; lx += w + 14; });
+    if (usadosE.size) { ly += 22; lx = PAD; }
+    [...usadosE].map(id => ESTR[id]).filter(Boolean).forEach(e => { const w = 22 + e.label.length * 5.2; if (lx + w > W - PAD) { lx = PAD; ly += 20; } lg += `<g transform="translate(${lx} ${ly - 1})" fill="none" stroke="${ink}" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">${e.svg}</g><text x="${lx + 21}" y="${ly + 10}" font-size="9.5" fill="${ink}">${esc(e.label)}</text>`; lx += w + 14; });
+    ly += 24;
+    lg += `<text x="${PAD}" y="${ly}" font-size="8.5" fill="${mut}">Contactos: — neto · ∿ erosivo · - - gradual · ··· inferido. Generado con PIC Campo.</text>`;
+    const Ht = ly + PAD;
+    s += `width="${W}" height="${Ht}" viewBox="0 0 ${W} ${Ht}"><defs>${patronesSVG(pref)}</defs><rect width="${W}" height="${Ht}" fill="#ffffff"/>${tit}${head}${body}${ax}${gs}${lg}</svg>`;
+    return { svg: s, w: W, h: Ht };
+  },
+  async png(col, factor = 2) {
+    const { svg, w, h } = this.svg(col, { pref: 'ex' });
+    const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+    try {
+      const img = new Image(); img.decoding = 'sync';
+      await new Promise((r, j) => { img.onload = r; img.onerror = () => j(new Error('No pude dibujar la columna')); img.src = url; });
+      const k = Math.max(1, Math.min(factor, 16000 / h)), c = document.createElement('canvas'); c.width = Math.round(w * k); c.height = Math.round(h * k);
+      const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height); ctx.drawImage(img, 0, 0, c.width, c.height);
+      return await new Promise(r => c.toBlob(r, 'image/png'));
+    } finally { URL.revokeObjectURL(url); }
+  },
+  /** CSV con el formato de importación de SedLog (primera fila = capa del tope, espesor en cm) */
+  csvSedLog(col) {
+    const rows = [['THICKNESS (CM)', 'BASE BOUNDARY', 'LITHOLOGY', 'LITHOLOGY %', 'GRAIN SIZE BASE', 'GRAIN SIZE TOP', 'SYMBOLS IN BED']];
+    for (const c of col.capas.slice().reverse()) {
+      const lit = LITO[c.lit] || LITO.arenisca, gb = GRANOS[GI[c.gBase] ?? GI[lit.grano]], gt = GRANOS[GI[c.gTope] ?? GI[c.gBase] ?? GI[lit.grano]];
+      rows.push([Math.round((Number(c.esp) || 0) * 100), (CONTACTOS.find(x => x[0] === c.contacto) || CONTACTOS[0])[2], lit.sl, 100, gb.sl, gt.sl, (c.estr || []).map(e => ESTR[e]?.sl).filter(Boolean).join(', ')]);
+    }
+    return Exportar.csv(rows);
+  },
+  /** CSV completo en castellano (de la base al tope) */
+  csvDetalle(col) {
+    const rows = [['capa', 'base_m', 'tope_m', 'espesor_m', 'litologia', 'grano_base', 'grano_tope', 'contacto_basal', 'estructuras', 'facies', 'paleocorriente_az', 'color', 'muestra', 'notas']];
+    let z = 0;
+    col.capas.forEach((c, i) => {
+      const e = Number(c.esp) || 0, lit = LITO[c.lit] || LITO.arenisca;
+      rows.push([i + 1, z.toFixed(2), (z + e).toFixed(2), e.toFixed(2), lit.label, GRANOS[GI[c.gBase] ?? GI[lit.grano]].label, GRANOS[GI[c.gTope] ?? GI[c.gBase] ?? GI[lit.grano]].label, (CONTACTOS.find(x => x[0] === c.contacto) || CONTACTOS[0])[1], (c.estr || []).map(x => ESTR[x]?.label).filter(Boolean).join('; '), c.facies || '', c.paleo ?? '', c.color || '', c.muestra || '', c.notas || '']);
+      z += e;
+    });
+    return Exportar.csv(rows);
+  },
+  nombreArchivo: col => (col.nombre || 'columna').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w.-]+/g, '_').slice(0, 40),
+};
+
+/* ============ Columna estratigráfica: interfaz ============ */
+const Columnas = {
+  async render() {
+    const box = $('#lista-col');
+    const cols = (await DB.all('columnas')).sort((a, b) => (b.editado || b.creado || '').localeCompare(a.editado || a.creado || ''));
+    if (!cols.length) { box.innerHTML = '<div class="vacio"><div class="vacio-ico">☰</div><p><b>Todavía no hay columnas.</b></p><p class="muted">Levantá el perfil de la base al tope: cargás cada capa con su espesor, litología, granulometría, contacto basal, estructuras y facies, y la app dibuja la columna como en SedLog. Se exporta como imagen y como CSV para importar en SedLog.</p></div>'; return; }
+    box.innerHTML = cols.map(c => {
+      const t = ColDraw.total(c), mini = c.capas.slice().reverse().slice(0, 14).map(k => { const l = LITO[k.lit] || LITO.arenisca; return `<i style="width:${8 + (GI[k.gBase] ?? GI[l.grano]) * 3}px;background:${l.fill}"></i>`; }).join('');
+      return `<button class="est-card col-card" data-id="${c.id}"><div class="col-mini">${mini}</div><div class="est-main"><div class="est-l1">${esc(c.nombre)}</div><div class="est-l2">${esc(c.unidad || 'Sin unidad')}</div><div class="est-l3">${c.capas.length} ${c.capas.length === 1 ? 'capa' : 'capas'} · ${String(Math.round(t * 100) / 100).replace('.', ',')} m · ${esc(fmtFecha(c.editado || c.creado))}</div></div></button>`;
+    }).join('');
+    $$('.col-card', box).forEach(b => b.onclick = () => this.abrir(b.dataset.id));
+  },
+  async nueva() {
+    const n = (await DB.all('columnas')).length + 1;
+    const col = { id: uid(), nombre: 'Columna ' + n, unidad: '', fecha: nowISO(), creado: nowISO(), editado: nowISO(), base: null, tope: null, actitud: '', escala: 'auto', notas: '', capas: [] };
+    const p = Geo.pos && Date.now() - Geo.pos.t < 30000 ? Geo.pos : null; if (p) col.base = { lat: p.lat, lon: p.lon };
+    await DB.put('columnas', col); await pedirPersistencia();
+    await this.datos(col, true);
+  },
+  async datos(col, esNueva) {
+    const s = Sheet.open(`<div class="sheet-body"><h3>${esNueva ? 'Nueva columna' : 'Datos de la columna'}</h3>
+      <label class="fld"><span>Nombre</span><input id="cd-nom" value="${esc(col.nombre)}"></label>
+      <label class="fld"><span>Unidad / formación</span><input id="cd-uni" list="dl-unidades" value="${esc(col.unidad)}" placeholder="Ej.: Fm. Agua de la Zorra"></label>
+      <label class="fld"><span>Actitud de las capas</span><input id="cd-act" value="${esc(col.actitud)}" placeholder="Ej.: 330/30 RMD"></label>
+      <div class="grid2"><div class="card loc"><b class="small">Base</b><div class="mono small" id="cd-b">${esc(col.base ? coordLine(col.base.lat, col.base.lon) : 'sin ubicar')}</div><button class="btn sm" id="cd-bg">◎ GPS</button></div>
+      <div class="card loc"><b class="small">Tope</b><div class="mono small" id="cd-t">${esc(col.tope ? coordLine(col.tope.lat, col.tope.lon) : 'sin ubicar')}</div><button class="btn sm" id="cd-tg">◎ GPS</button></div></div>
+      <label class="fld"><span>Notas</span><textarea id="cd-not" rows="3">${esc(col.notas || '')}</textarea></label>
+      <div class="row-btns"><button class="btn ghost" data-close>${esNueva ? 'Después' : 'Cancelar'}</button><button class="btn primary" id="cd-ok">${esNueva ? 'Empezar' : 'Guardar'}</button></div></div>`);
+    const gps = async (k, out) => { toast('Buscando posición…', 0); const p = await Geo.una(10000); if (!p) return toast('Sin señal GPS'); col[k] = { lat: p.lat, lon: p.lon }; $(out, s.el).textContent = coordLine(p.lat, p.lon); toast('Ubicación guardada (±' + Math.round(p.acc) + ' m)'); };
+    $('#cd-bg', s.el).onclick = () => gps('base', '#cd-b'); $('#cd-tg', s.el).onclick = () => gps('tope', '#cd-t');
+    $('#cd-ok', s.el).onclick = async () => {
+      col.nombre = $('#cd-nom', s.el).value.trim() || col.nombre; col.unidad = $('#cd-uni', s.el).value; col.actitud = $('#cd-act', s.el).value; col.notas = $('#cd-not', s.el).value; col.editado = nowISO();
+      await DB.put('columnas', col); s.close(); this.render();
+      if (esNueva) this.abrir(col.id); else document.dispatchEvent(new CustomEvent('columna', { detail: col.id }));
+    };
+    if (esNueva) s.onClose = () => { this.render(); };
+  },
+  async abrir(id) {
+    let col = await DB.get('columnas', id); if (!col) return;
+    let modo = 'capas';
+    const s = Sheet.open(`<div class="sheet-head"><button class="icon-btn" data-close aria-label="Volver">←</button><h3 id="cv-tit"></h3><button class="icon-btn" id="cv-menu" aria-label="Más">⋯</button></div>
+      <div class="cv-top"><div class="seg" id="cv-modo"><button data-m="capas" class="on">Capas</button><button data-m="dibujo">Dibujo</button></div><div class="cv-tot mono" id="cv-tot"></div></div>
+      <div class="sheet-body cv-body" id="cv-body"></div>
+      <div class="cv-foot"><button class="btn primary big" id="cv-add">+ Capa arriba</button></div>`, { full: true, onClose: () => { document.removeEventListener('columna', onExt); this.render(); } });
+    const el = s.el;
+    const guardar = async () => { col.editado = nowISO(); await DB.put('columnas', col); };
+    const pintar = () => {
+      $('#cv-tit', el).textContent = col.nombre;
+      $('#cv-tot', el).textContent = col.capas.length + ' capas · ' + String(Math.round(ColDraw.total(col) * 100) / 100).replace('.', ',') + ' m';
+      $$('#cv-modo button', el).forEach(b => b.classList.toggle('on', b.dataset.m === modo));
+      const body = $('#cv-body', el);
+      if (modo === 'dibujo') {
+        const { svg } = ColDraw.svg(col);
+        body.innerHTML = `<div class="cv-esc"><label class="fld"><span>Escala vertical</span><select id="cv-escala"><option value="auto">Automática</option><option value="50">1:50</option><option value="100">1:100</option><option value="200">1:200</option><option value="500">1:500</option><option value="1000">1:1000</option></select></label></div><div class="cv-svg">${col.capas.length ? svg : '<p class="muted center">Agregá la primera capa (la de la base).</p>'}</div>`;
+        $('#cv-escala', body).value = String(col.escala || 'auto');
+        $('#cv-escala', body).onchange = async e => { col.escala = e.target.value; await guardar(); pintar(); };
+        return;
+      }
+      if (!col.capas.length) { body.innerHTML = '<div class="vacio"><p><b>Empezá por la base.</b></p><p class="muted">Tocá «+ Capa arriba» para cargar la capa más baja del perfil; las siguientes se apilan encima.</p></div>'; return; }
+      let z = ColDraw.total(col), html = '';
+      for (let i = col.capas.length - 1; i >= 0; i--) {
+        const c = col.capas[i], e = Number(c.esp) || 0, lit = LITO[c.lit] || LITO.arenisca, gb = GI[c.gBase] ?? GI[lit.grano], gt = GI[c.gTope] ?? gb;
+        const zb = z - e;
+        html += `<button class="capa-row" data-i="${i}"><div class="capa-bar"><svg viewBox="0 0 64 24" preserveAspectRatio="none" width="64" height="40"><path d="M0 24 H${8 + gb * 5} L${8 + gt * 5} 0 H0 Z" fill="${lit.fill}" stroke="#1f1b16" stroke-width=".8"/></svg></div>
+          <div class="capa-main"><div class="capa-l1"><b>${esc(lit.label)}</b>${lit.ignea || lit.id === 'cubierto' ? '' : ' · ' + esc(GRANOS[gb].label.toLowerCase()) + (gt !== gb ? ' → ' + esc(GRANOS[gt].label.toLowerCase()) : '')}${c.color ? ' · ' + esc(c.color) : ''}</div>
+          <div class="capa-l2 mono">${String(e).replace('.', ',')} m · ${zb.toFixed(2).replace('.', ',')}–${z.toFixed(2).replace('.', ',')} m${c.facies ? ' · ' + esc(c.facies) : ''}${c.paleo !== '' && c.paleo != null ? ' · ↑' + esc(c.paleo) + '°' : ''}</div>
+          <div class="capa-l3">${(c.estr || []).map(x => icoEstr(x, 15)).join('')}${c.contacto && c.contacto !== 'neto' && i > 0 ? '<span class="muted small">base ' + esc((CONTACTOS.find(k => k[0] === c.contacto) || [])[1]?.toLowerCase() || '') + '</span>' : ''}${c.muestra ? '<span class="chip">◆ ' + esc(c.muestra) + '</span>' : ''}</div>
+          ${c.notas ? '<div class="capa-l4 muted small">' + esc(c.notas) + '</div>' : ''}</div><span class="capa-n">${i + 1}</span></button>`;
+        z = zb;
+      }
+      body.innerHTML = html + '<p class="muted small center">↓ base de la columna</p>';
+      $$('.capa-row', body).forEach(b => b.onclick = () => this.editarCapa(col, +b.dataset.i, guardar, pintar));
+    };
+    const onExt = async ev => { if (ev.detail === col.id) { col = await DB.get('columnas', col.id); pintar(); } };
+    document.addEventListener('columna', onExt);
+    $$('#cv-modo button', el).forEach(b => b.onclick = () => { modo = b.dataset.m; pintar(); });
+    $('#cv-add', el).onclick = () => this.editarCapa(col, null, guardar, pintar);
+    $('#cv-menu', el).onclick = () => {
+      const m = Sheet.open(`<div class="sheet-body"><h3>${esc(col.nombre)}</h3><div class="col-btns">
+        <button class="btn" id="cm-datos">Datos de la columna</button>
+        <button class="btn primary" id="cm-png">Compartir imagen (PNG)</button><button class="btn" id="cm-svg">Compartir dibujo editable (SVG)</button>
+        <button class="btn" id="cm-sedlog">CSV para SedLog</button><button class="btn" id="cm-csv">CSV completo (castellano)</button>
+        <button class="btn danger ghost" id="cm-del">Eliminar columna</button></div>
+        <p class="muted small">El CSV para SedLog trae espesores (cm), contactos, litología y granulometría con los nombres en inglés que usa SedLog. Las estructuras van como texto: si SedLog no reconoce alguna, asignale el símbolo a mano.</p></div>`);
+      const n = ColDraw.nombreArchivo(col);
+      $('#cm-datos', m.el).onclick = () => { m.close(); this.datos(col, false); };
+      $('#cm-png', m.el).onclick = async () => { if (!col.capas.length) return toast('La columna no tiene capas'); try { compartirOBajar(await ColDraw.png(col, 3), n + '.png', col.nombre); } catch (e) { toast(e.message); } };
+      $('#cm-svg', m.el).onclick = () => compartirOBajar(new Blob([ColDraw.svg(col, { pref: 'ex' }).svg], { type: 'image/svg+xml' }), n + '.svg', col.nombre);
+      $('#cm-sedlog', m.el).onclick = () => compartirOBajar(new Blob([ColDraw.csvSedLog(col)], { type: 'text/csv' }), n + '_sedlog.csv', col.nombre);
+      $('#cm-csv', m.el).onclick = () => compartirOBajar(new Blob([ColDraw.csvDetalle(col)], { type: 'text/csv' }), n + '_capas.csv', col.nombre);
+      $('#cm-del', m.el).onclick = async () => { if (await confirmar('¿Eliminar «' + col.nombre + '» con todas sus capas?', 'Eliminar', true)) { await DB.del('columnas', col.id); Sheet.stack.slice().forEach(x => x.close()); toast('Columna eliminada'); } };
+    };
+    pintar();
+  },
+  editarCapa(col, idx, guardar, pintar) {
+    const nueva = idx == null;
+    const prev = nueva ? col.capas[col.capas.length - 1] : null;
+    const c = nueva ? { id: uid(), esp: '', lit: prev?.lit || 'arenisca', gBase: prev?.gTope || prev?.gBase || '', gTope: '', contacto: 'neto', estr: [], facies: '', paleo: '', color: '', muestra: '', notas: '' } : JSON.parse(JSON.stringify(col.capas[idx]));
+    if (!c.gBase) c.gBase = LITO[c.lit].grano;
+    let unidad = 'm';
+    const z0 = nueva ? ColDraw.total(col) : col.capas.slice(0, idx).reduce((s, k) => s + (Number(k.esp) || 0), 0);
+    const s = Sheet.open(`<div class="sheet-head"><button class="icon-btn" data-close aria-label="Cancelar">✕</button><h3>${nueva ? 'Capa ' + (col.capas.length + 1) : 'Capa ' + (idx + 1)}</h3><button class="btn sm primary" id="ce-ok">${nueva ? 'Agregar' : 'Guardar'}</button></div>
+      <div class="sheet-body">
+        <p class="muted small">Base de la capa a ${z0.toFixed(2).replace('.', ',')} m del inicio de la columna.</p>
+        <div class="esp-row"><label class="fld"><span>Espesor</span><input id="ce-esp" inputmode="decimal" value="${c.esp !== '' ? String(c.esp).replace('.', ',') : ''}" placeholder="0,0"></label>
+          <div class="seg sm" id="ce-u"><button data-u="m" class="on">m</button><button data-u="cm">cm</button></div>
+          <button class="btn sm ghost" id="ce-calc">Calcular</button></div>
+        <h4 class="ce-h">Litología</h4><div class="lito-grid" id="ce-lit">${LITOS.map(l => `<button data-l="${l.id}" class="${c.lit === l.id ? 'on' : ''}"><svg width="30" height="18"><rect width="30" height="18" fill="url(#ui-${l.id})" stroke="#1f1b16" stroke-width=".8"/></svg><span>${esc(l.label)}</span></button>`).join('')}</div>
+        <h4 class="ce-h">Granulometría <span class="muted small" id="ce-gtxt"></span></h4>
+        <div class="gran" id="ce-gb">${GRANOS.map((g, i) => `<button data-g="${g.id}" title="${esc(g.label)}" style="--h:${10 + i * 3}px">${g.ab}</button>`).join('')}</div>
+        <label class="chk"><input type="checkbox" id="ce-grad" ${c.gTope && c.gTope !== c.gBase ? 'checked' : ''}><span>Cambia hacia el tope (gradación)</span></label>
+        <div class="gran" id="ce-gt" hidden>${GRANOS.map((g, i) => `<button data-g="${g.id}" title="${esc(g.label)}" style="--h:${10 + i * 3}px">${g.ab}</button>`).join('')}</div>
+        <h4 class="ce-h">Contacto basal</h4><div class="seg" id="ce-ct">${CONTACTOS.map(k => `<button data-c="${k[0]}" class="${(c.contacto || 'neto') === k[0] ? 'on' : ''}">${k[1].split(' ')[0]}</button>`).join('')}</div>
+        <h4 class="ce-h">Estructuras y contenido</h4><div class="estr-grid" id="ce-es">${ESTRUCTURAS.map(e => `<button data-e="${e.id}" class="${(c.estr || []).includes(e.id) ? 'on' : ''}">${icoEstr(e.id, 18)}<span>${esc(e.label)}</span></button>`).join('')}</div>
+        <div class="grid2"><label class="fld"><span>Facies (Miall)</span><input id="ce-fac" list="dl-facies" value="${esc(c.facies || '')}" autocapitalize="off" placeholder="St, Sh, Fl…"></label>
+        <label class="fld"><span>Paleocorriente (az.)</span><input id="ce-pal" inputmode="numeric" value="${esc(c.paleo ?? '')}" placeholder="0–359"></label></div>
+        <div class="grid2"><label class="fld"><span>Color</span><input id="ce-col" value="${esc(c.color || '')}" placeholder="Ej.: castaño rojizo"></label>
+        <label class="fld"><span>Muestra</span><input id="ce-mue" value="${esc(c.muestra || '')}" placeholder="Ej.: C1-M3"></label></div>
+        <label class="fld"><span>Notas</span><textarea id="ce-not" rows="3" placeholder="Geometría, base, fósiles, interpretación…">${esc(c.notas || '')}</textarea></label>
+        ${nueva ? '' : '<div class="row-btns wrap"><button class="btn" id="ce-ins">Insertar capa debajo</button><button class="btn" id="ce-up">Subir</button><button class="btn" id="ce-down">Bajar</button><button class="btn danger ghost" id="ce-del">Eliminar</button></div>'}
+        <svg width="0" height="0" style="position:absolute"><defs>${patronesSVG('ui')}</defs></svg>
+      </div>`, { full: true });
+    const el = s.el;
+    const selG = (box, val) => $$('button', $(box, el)).forEach(b => b.classList.toggle('on', b.dataset.g === val));
+    const txtG = () => { const l = LITO[c.lit]; $('#ce-gtxt', el).textContent = l.id === 'cubierto' ? '(no se usa en tramos cubiertos)' : l.ignea ? '(en rocas ígneas solo define el ancho del dibujo)' : GRANOS[GI[c.gBase]].label + (c.gTope && c.gTope !== c.gBase ? ' → ' + GRANOS[GI[c.gTope]].label : ''); };
+    selG('#ce-gb', c.gBase); if (c.gTope) selG('#ce-gt', c.gTope); $('#ce-gt', el).hidden = !$('#ce-grad', el).checked; txtG();
+    $$('#ce-gb button', el).forEach(b => b.onclick = () => { c.gBase = b.dataset.g; selG('#ce-gb', c.gBase); if (!$('#ce-grad', el).checked) c.gTope = ''; txtG(); });
+    $$('#ce-gt button', el).forEach(b => b.onclick = () => { c.gTope = b.dataset.g; selG('#ce-gt', c.gTope); txtG(); });
+    $('#ce-grad', el).onchange = e => { $('#ce-gt', el).hidden = !e.target.checked; if (!e.target.checked) c.gTope = ''; else { c.gTope = c.gTope || c.gBase; selG('#ce-gt', c.gTope); } txtG(); };
+    $$('#ce-lit button', el).forEach(b => b.onclick = () => { const antes = LITO[c.lit]; c.lit = b.dataset.l; $$('#ce-lit button', el).forEach(x => x.classList.toggle('on', x === b)); if (!c.gBase || c.gBase === antes.grano) { c.gBase = LITO[c.lit].grano; selG('#ce-gb', c.gBase); } txtG(); });
+    $$('#ce-ct button', el).forEach(b => b.onclick = () => { c.contacto = b.dataset.c; $$('#ce-ct button', el).forEach(x => x.classList.toggle('on', x === b)); });
+    $$('#ce-es button', el).forEach(b => b.onclick = () => { const id = b.dataset.e; c.estr = c.estr || []; const k = c.estr.indexOf(id); if (k >= 0) c.estr.splice(k, 1); else c.estr.push(id); b.classList.toggle('on', k < 0); });
+    $$('#ce-u button', el).forEach(b => b.onclick = () => { const v = parseNum($('#ce-esp', el).value); const nu = b.dataset.u; if (!isNaN(v) && nu !== unidad) $('#ce-esp', el).value = String(nu === 'cm' ? Math.round(v * 100 * 10) / 10 : v / 100).replace('.', ','); unidad = nu; $$('#ce-u button', el).forEach(x => x.classList.toggle('on', x === b)); });
+    $('#ce-calc', el).onclick = () => Espesor.calcular(col, v => { if (unidad === 'cm') $$('#ce-u button', el)[0].click(); $('#ce-esp', el).value = String(Math.round(v * 100) / 100).replace('.', ','); });
+    if (nueva) setTimeout(() => $('#ce-esp', el).focus(), 250);
+    $('#ce-ok', el).onclick = async () => {
+      let v = parseNum($('#ce-esp', el).value); if (isNaN(v) || v <= 0) return toast('Poné el espesor de la capa');
+      if (unidad === 'cm') v = v / 100;
+      const pal = $('#ce-pal', el).value.trim(); if (pal && (isNaN(parseNum(pal)) || parseNum(pal) < 0 || parseNum(pal) >= 360)) return toast('Paleocorriente: acimut entre 0 y 359');
+      Object.assign(c, { esp: Math.round(v * 1000) / 1000, facies: $('#ce-fac', el).value.trim(), paleo: pal === '' ? '' : Math.round(parseNum(pal)), color: $('#ce-col', el).value, muestra: $('#ce-mue', el).value, notas: $('#ce-not', el).value });
+      if (c.gTope === c.gBase) c.gTope = '';
+      if (nueva) col.capas.push(c); else col.capas[idx] = c;
+      await guardar(); s.close(); pintar(); toast(nueva ? 'Capa ' + col.capas.length + ' agregada' : 'Capa guardada');
+    };
+    if (!nueva) {
+      $('#ce-del', el).onclick = async () => { if (await confirmar('¿Eliminar la capa ' + (idx + 1) + '?', 'Eliminar', true)) { col.capas.splice(idx, 1); await guardar(); s.close(); pintar(); } };
+      $('#ce-ins', el).onclick = async () => { s.close(); setTimeout(() => this.insertarDebajo(col, idx, guardar, pintar), 250); };
+      $('#ce-up', el).onclick = async () => { if (idx >= col.capas.length - 1) return; [col.capas[idx], col.capas[idx + 1]] = [col.capas[idx + 1], col.capas[idx]]; await guardar(); s.close(); pintar(); };
+      $('#ce-down', el).onclick = async () => { if (idx <= 0) return; [col.capas[idx], col.capas[idx - 1]] = [col.capas[idx - 1], col.capas[idx]]; await guardar(); s.close(); pintar(); };
+    }
+  },
+  async insertarDebajo(col, idx, guardar, pintar) {
+    const c = { id: uid(), esp: 1, lit: col.capas[idx].lit, gBase: col.capas[idx].gBase, gTope: '', contacto: 'neto', estr: [], facies: '', paleo: '', color: '', muestra: '', notas: '' };
+    col.capas.splice(idx, 0, c); await guardar(); pintar();
+    this.editarCapa(col, idx, guardar, pintar);
+  },
+};
+
+/* ============ Espesor verdadero entre dos puntos ============ */
+const Espesor = {
+  async calcular(col, usar) {
+    const est = (await DB.all('estaciones')).filter(e => e.lat != null).sort((a, b) => (a.creado || '').localeCompare(b.creado || ''));
+    const ops = `<option value="gps">Mi posición actual (GPS)</option>${col.base ? '<option value="cb">Base de la columna</option>' : ''}${col.tope ? '<option value="ct">Tope de la columna</option>' : ''}` + est.map(e => `<option value="${e.id}">${esc(e.codigo)}${e.unidad ? ' · ' + esc(e.unidad) : ''}</option>`).join('');
+    const ref = Settings.get('norte');
+    const s = Sheet.open(`<div class="sheet-body"><h3>Espesor verdadero</h3>
+      <p class="muted small">Entre la base y el tope del paquete medidos en el terreno. Usa la distancia entre los dos puntos, la diferencia de cota del modelo de elevación y la actitud de las capas.</p>
+      <label class="fld"><span>Punto en la base</span><select id="ev-a">${ops}</select></label>
+      <label class="fld"><span>Punto en el tope</span><select id="ev-b">${ops}</select></label>
+      <div class="grid2"><label class="fld"><span>Rumbo (RMD)</span><input id="ev-r" inputmode="numeric"></label><label class="fld"><span>Buzamiento</span><input id="ev-d" inputmode="numeric"></label></div>
+      <p class="muted small">Acimut respecto al ${ref === 'geo' ? 'norte geográfico' : 'norte magnético'} (se corrige la declinación).</p>
+      <div class="card" id="ev-res"><p class="muted small">Elegí los dos puntos y la actitud.</p></div>
+      <div class="row-btns"><button class="btn ghost" data-close>Cancelar</button><button class="btn primary" id="ev-ok" disabled>Usar este espesor</button></div></div>`);
+    const el = s.el; let res = null;
+    if (col.base) $('#ev-a', el).value = 'cb'; if (col.tope) $('#ev-b', el).value = 'ct';
+    // actitud: de la columna (texto) o de la última S0 medida
+    const m = (col.actitud || '').match(/(\d{1,3})\s*[\/°]\s*(\d{1,2})/);
+    if (m) { $('#ev-r', el).value = m[1]; $('#ev-d', el).value = m[2]; }
+    else { const s0 = (await DB.all('mediciones')).filter(x => x.tipo === 'S0').sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''))[0]; if (s0) { const az = Med.azPref(s0); $('#ev-r', el).value = fmt0(az - 90); $('#ev-d', el).value = Math.round(s0.inc); } }
+    const punto = async v => {
+      if (v === 'gps') { const p = await Geo.una(15000); return p ? { lat: p.lat, lon: p.lon, alt: p.alt } : null; }
+      if (v === 'cb') return col.base; if (v === 'ct') return col.tope;
+      const e = est.find(x => x.id === v); return e ? { lat: e.lat, lon: e.lon, alt: e.alt } : null;
+    };
+    const calc = async () => {
+      const A = await punto($('#ev-a', el).value), B = await punto($('#ev-b', el).value);
+      const r = parseNum($('#ev-r', el).value), d = parseNum($('#ev-d', el).value);
+      const out = $('#ev-res', el); res = null; $('#ev-ok', el).disabled = true;
+      if (!A || !B) { out.innerHTML = '<p class="muted small">Falta la ubicación de alguno de los puntos.</p>'; return; }
+      if (isNaN(r) || isNaN(d) || d < 0 || d > 90) { out.innerHTML = '<p class="muted small">Completá rumbo (0–359) y buzamiento (0–90).</p>'; return; }
+      const za = Relieve.cota(A.lat, A.lon) ?? A.alt, zb = Relieve.cota(B.lat, B.lon) ?? B.alt;
+      if (za == null || zb == null) { out.innerHTML = '<p class="muted small">No tengo la cota de alguno de los puntos (fuera del modelo y sin altura GPS).</p>'; return; }
+      const [ea, na] = tmFwd(A.lat, A.lon, PROJ.utm), [eb, nb] = tmFwd(B.lat, B.lon, PROJ.utm);
+      const dE = eb - ea, dN = nb - na, dZ = zb - za;
+      const dd = mod360(r + 90 + (ref === 'geo' ? 0 : Number(Settings.get('declinacion')))) * D2R, dip = d * D2R;
+      const n = [Math.sin(dip) * Math.sin(dd), Math.sin(dip) * Math.cos(dd), Math.cos(dip)];
+      const t = Math.abs(n[0] * dE + n[1] * dN + n[2] * dZ), dh = Math.hypot(dE, dN);
+      res = t; $('#ev-ok', el).disabled = !(t > 0);
+      out.innerHTML = `<div class="ev-big mono">${t.toFixed(1).replace('.', ',')} m</div><div class="muted small">Distancia horizontal ${dh.toFixed(0)} m · desnivel ${dZ >= 0 ? '+' : ''}${dZ.toFixed(0)} m (cota del modelo de 30 m) · el error crece si el recorrido es corto o la pendiente es suave.</div>`;
+    };
+    ['#ev-a', '#ev-b', '#ev-r', '#ev-d'].forEach(q => $(q, el).addEventListener('change', calc));
+    ['#ev-r', '#ev-d'].forEach(q => $(q, el).addEventListener('input', debounce(calc, 300)));
+    calc();
+    $('#ev-ok', el).onclick = () => { if (res) { usar(res); s.close(); } };
+  },
+};
+
 /* ============ Brújula / clinómetro ============ */
 const Brujula = {
   fijo: null, raf: false, ult: null, armado: false,
@@ -2508,7 +3439,10 @@ const Zip = {
 const Exportar = {
   csv(rows) { return '﻿' + rows.map(r => r.map(v => { const s = v == null ? '' : String(v); return /[",;\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(',')).join('\r\n'); },
   xml: s => esc(s),
-  nombreArchivo(e, m, i) { return (m.tipo === 'foto' ? 'fotos/' : 'croquis/') + (e?.codigo || 'sin_estacion').replace(/[^\w.-]+/g, '_') + '_' + (m.tipo === 'foto' ? 'F' : 'C') + pad(i + 1) + (m.tipo === 'foto' ? '.jpg' : '.png'); },
+  nombreArchivo(e, m, i) {
+    const d = { foto: ['fotos/', 'F', '.jpg'], croquis: ['croquis/', 'C', '.png'], audio: ['audios/', 'V', Voz.ext(m.mime || '')] }[m.tipo] || ['otros/', 'X', ''];
+    return d[0] + (e?.codigo || 'sin_estacion').replace(/[^\w.-]+/g, '_') + '_' + d[1] + pad(i + 1) + d[2];
+  },
   /** Foto con la ubicación escrita en el EXIF (la que lee Google Fotos, Google Earth, QGIS) */
   async fotoGeo(m, e) {
     const lat = m.lat ?? e?.lat, lon = m.lon ?? e?.lon;
@@ -2516,18 +3450,18 @@ const Exportar = {
   },
   async datos() {
     const est = (await DB.all('estaciones')).sort((a, b) => (a.creado || '').localeCompare(b.creado || ''));
-    return { est, meds: await DB.all('mediciones'), media: await DB.all('media'), recs: await DB.all('recorridos'), paradas: await DB.kvGet('paradas', {}) };
+    return { est, meds: await DB.all('mediciones'), media: await DB.all('media'), recs: await DB.all('recorridos'), paradas: await DB.kvGet('paradas', {}), cols: await DB.all('columnas') };
   },
   async todo() {
     toast('Armando el archivo…', 0);
-    const { est, meds, media, recs, paradas } = await this.datos();
+    const { est, meds, media, recs, paradas, cols } = await this.datos();
     const byId = Object.fromEntries(est.map(e => [e.id, e]));
     const files = [];
     // estaciones.csv
-    const rE = [['codigo', 'fecha', 'parada', 'unidad', 'descripcion', 'muestras', 'lat', 'lon', 'utm19s_e', 'utm19s_n', 'gk2_e', 'gk2_n', 'altitud_m', 'precision_m', 'n_mediciones', 'n_fotos', 'n_croquis']];
+    const rE = [['codigo', 'fecha', 'parada', 'unidad', 'descripcion', 'muestras', 'lat', 'lon', 'utm19s_e', 'utm19s_n', 'gk2_e', 'gk2_n', 'altitud_gps_m', 'cota_modelo_m', 'precision_m', 'n_mediciones', 'n_fotos', 'n_croquis']];
     for (const e of est) {
       const u = e.lat != null ? tmFwd(e.lat, e.lon, PROJ.utm) : ['', ''], g = e.lat != null ? tmFwd(e.lat, e.lon, PROJ.gk) : ['', ''];
-      rE.push([e.codigo, e.fecha, e.parada, e.unidad, e.desc, e.muestras, e.lat?.toFixed(7), e.lon?.toFixed(7), u[0] !== '' ? Math.round(u[0]) : '', u[1] !== '' ? Math.round(u[1]) : '', g[0] !== '' ? Math.round(g[0]) : '', g[1] !== '' ? Math.round(g[1]) : '', e.alt != null ? Math.round(e.alt) : '', e.acc != null ? Math.round(e.acc) : '',
+      rE.push([e.codigo, e.fecha, e.parada, e.unidad, e.desc, e.muestras, e.lat?.toFixed(7), e.lon?.toFixed(7), u[0] !== '' ? Math.round(u[0]) : '', u[1] !== '' ? Math.round(u[1]) : '', g[0] !== '' ? Math.round(g[0]) : '', g[1] !== '' ? Math.round(g[1]) : '', e.alt != null ? Math.round(e.alt) : '', e.lat != null && Relieve.cota(e.lat, e.lon) != null ? Math.round(Relieve.cota(e.lat, e.lon)) : '', e.acc != null ? Math.round(e.acc) : '',
         meds.filter(m => m.estacionId === e.id).length, media.filter(m => m.estacionId === e.id && m.tipo === 'foto').length, media.filter(m => m.estacionId === e.id && m.tipo === 'croquis').length]);
     }
     files.push({ name: 'estaciones.csv', data: this.csv(rE) });
@@ -2562,6 +3496,8 @@ const Exportar = {
       txt += '══ ' + e.codigo + ' · ' + fmtFecha(e.fecha) + (e.parada ? ' · parada ' + e.parada : '') + '\n' + coordLine(e.lat, e.lon, 'utm') + (e.acc != null ? ' (±' + Math.round(e.acc) + ' m)' : '') + (e.alt != null ? ' · ' + Math.round(e.alt) + ' m s.n.m.' : '') + '\n';
       if (e.unidad) txt += 'Unidad: ' + e.unidad + '\n'; if (e.desc) txt += e.desc + '\n'; if (e.muestras) txt += 'Muestras: ' + e.muestras + '\n';
       for (const m of meds.filter(m => m.estacionId === e.id)) txt += '  · ' + (TIPO[m.tipo]?.label || m.tipo) + ': ' + Med.texto(m) + (m.obs ? ' — ' + m.obs : '') + '\n';
+      const na = media.filter(m => m.estacionId === e.id && m.tipo === 'audio');
+      if (na.length) txt += '  · Notas de voz: ' + na.map(a => Voz.fmtDur(a.dur) + (a.nota ? ' (' + a.nota + ')' : '')).join(', ') + ' — carpeta audios/\n';
       txt += '\n';
     }
     files.push({ name: 'libreta.txt', data: txt });
@@ -2572,18 +3508,29 @@ const Exportar = {
       const e = byId[m.estacionId], nombre = this.nombreArchivo(e, m, cont[k]++);
       const blob = m.tipo === 'foto' ? await this.fotoGeo(m, e) : m.blob;
       files.push({ name: nombre, data: new Uint8Array(await blob.arrayBuffer()) });
-      mediaMeta.push({ id: m.id, estacionId: m.estacionId, tipo: m.tipo, fecha: m.fecha, nota: m.nota, lat: m.lat ?? null, lon: m.lon ?? null, acc: m.acc ?? null, alt: m.alt ?? null, origen: m.origen || null, archivo: nombre });
+      mediaMeta.push({ id: m.id, estacionId: m.estacionId, tipo: m.tipo, fecha: m.fecha, nota: m.nota, lat: m.lat ?? null, lon: m.lon ?? null, acc: m.acc ?? null, alt: m.alt ?? null, origen: m.origen || null, mime: m.mime || null, dur: m.dur ?? null, archivo: nombre });
     }
     // Tabla de fotos con coordenadas (QGIS: Capa → Agregar capa de texto delimitado, X = lon, Y = lat)
     const ORIG = { gps: 'GPS al sacarla', foto: 'EXIF de la foto', estacion: 'coordenada de la estación' };
     const fotos = mediaMeta.filter(m => m.tipo === 'foto').map(m => { const e = byId[m.estacionId]; const lat = m.lat ?? e?.lat, lon = m.lon ?? e?.lon; const u = lat != null ? tmFwd(lat, lon, PROJ.utm) : null; return Object.assign({}, m, { lat, lon, u, est: e?.codigo }); });
+    const auds = mediaMeta.filter(m => m.tipo === 'audio');
+    if (auds.length) files.push({ name: 'notas_de_voz.csv', data: this.csv([['archivo', 'estacion', 'fecha', 'duracion_s', 'titulo', 'lat', 'lon'], ...auds.map(a => [a.archivo, byId[a.estacionId]?.codigo, a.fecha, a.dur, a.nota || '', a.lat?.toFixed?.(7) ?? '', a.lon?.toFixed?.(7) ?? ''])]) });
     if (fotos.length) files.push({ name: 'fotos.csv', data: this.csv([['archivo', 'estacion', 'fecha', 'lat', 'lon', 'utm19s_e', 'utm19s_n', 'precision_m', 'origen_ubicacion', 'nota'], ...fotos.map(f => [f.archivo, f.est, f.fecha, f.lat?.toFixed(7), f.lon?.toFixed(7), f.u ? Math.round(f.u[0]) : '', f.u ? Math.round(f.u[1]) : '', f.acc ?? '', ORIG[f.origen] || (f.lat != null ? 'coordenada de la estación' : 'sin ubicación'), f.nota || ''])]) });
     const kmlFotos = fotos.filter(f => f.lat != null).map(f => `<Placemark><name>${x(f.archivo.replace('fotos/', ''))}</name><styleUrl>#f</styleUrl><description><![CDATA[<img src="${f.archivo}" width="480"><br>${x(f.est || '')} · ${x(fmtFecha(f.fecha))}${f.nota ? '<br>' + x(f.nota) : ''}]]></description><Point><coordinates>${f.lon.toFixed(7)},${f.lat.toFixed(7)}</coordinates></Point></Placemark>`).join('');
     const ki = files.findIndex(f => f.name === 'estaciones.kml');
     files[ki].data = files[ki].data.replace('__FOTOS__', kmlFotos ? '<Folder><name>Fotos</name>' + kmlFotos + '</Folder>' : '');
     if (fotos.length) { const gi = files.findIndex(f => f.name === 'estaciones.geojson'); const g = JSON.parse(files[gi].data); for (const f of fotos) if (f.lat != null) g.features.push({ type: 'Feature', geometry: { type: 'Point', coordinates: [+f.lon.toFixed(7), +f.lat.toFixed(7)] }, properties: { foto: f.archivo, estacion: f.est, fecha: f.fecha, nota: f.nota || '' } }); files[gi].data = JSON.stringify(g, null, 1); }
     // Respaldo completo para restaurar en otro celular
-    files.push({ name: 'respaldo_app.json', data: JSON.stringify({ app: 'pic-campo', version: APP_VERSION, exportado: nowISO(), estaciones: est, mediciones: meds, media: mediaMeta, recorridos: recs, paradas }) });
+    // Columnas estratigráficas
+    const usados = new Set();
+    for (const c of cols.filter(c => c.capas.length)) {
+      let n = ColDraw.nombreArchivo(c), k = 2; while (usados.has(n)) n = ColDraw.nombreArchivo(c) + '_' + k++; usados.add(n);
+      files.push({ name: 'columnas/' + n + '.svg', data: ColDraw.svg(c, { pref: 'ex' }).svg });
+      try { files.push({ name: 'columnas/' + n + '.png', data: new Uint8Array(await (await ColDraw.png(c, 2)).arrayBuffer()) }); } catch (e) { console.warn(e); }
+      files.push({ name: 'columnas/' + n + '_sedlog.csv', data: ColDraw.csvSedLog(c) });
+      files.push({ name: 'columnas/' + n + '_capas.csv', data: ColDraw.csvDetalle(c) });
+    }
+    files.push({ name: 'respaldo_app.json', data: JSON.stringify({ app: 'pic-campo', version: APP_VERSION, exportado: nowISO(), estaciones: est, mediciones: meds, media: mediaMeta, recorridos: recs, paradas, columnas: cols }) });
     const blob = Zip.crear(files);
     const d = new Date(), nombre = 'PIC_campo_' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '_' + pad(d.getHours()) + pad(d.getMinutes()) + '.zip';
     toast('Listo: ' + (blob.size / 1048576).toFixed(1).replace('.', ',') + ' MB');
@@ -2599,7 +3546,8 @@ const Exportar = {
     for (const e of r.estaciones || []) { await DB.put('estaciones', e); n++; }
     for (const m of r.mediciones || []) await DB.put('mediciones', m);
     for (const r2 of r.recorridos || []) await DB.put('recorridos', r2);
-    for (const m of r.media || []) { const f = byName[m.archivo]; if (!f) continue; const { archivo, ...rest } = m; rest.blob = new Blob([f.data], { type: m.tipo === 'foto' ? 'image/jpeg' : 'image/png' }); await DB.put('media', rest); }
+    for (const c of r.columnas || []) await DB.put('columnas', c);
+    for (const m of r.media || []) { const f = byName[m.archivo]; if (!f) continue; const { archivo, ...rest } = m; rest.blob = new Blob([f.data], { type: m.tipo === 'foto' ? 'image/jpeg' : m.tipo === 'audio' ? (m.mime || 'audio/webm') : 'image/png' }); await DB.put('media', rest); }
     if (r.paradas && Object.keys(r.paradas).length) { const ov = await DB.kvGet('paradas', {}); await DB.kvSet('paradas', Object.assign(ov, r.paradas)); await Paradas.load(); document.dispatchEvent(new Event('paradas')); }
     document.dispatchEvent(new Event('estaciones')); document.dispatchEvent(new Event('recorrido'));
     return n;
@@ -2635,6 +3583,24 @@ const Guia = {
 
       <details class="g-sec"><summary>Estructuras principales</summary>${GUIA.estructuras.map(s => `<div class="estr"><b>${esc(s.n)}</b><p>${esc(s.d)}</p></div>`).join('')}<p class="small"><b>Mineralización del distrito:</b> ${esc(GUIA.mineral)}</p></details>
 
+      <details class="g-sec" id="g-tele"><summary>Teledetección</summary>
+        <p class="small">${esc(TELE.fuente)} Las capas se prenden en Mapa → Capas.</p>
+        <h4>Cómo se hizo</h4>
+        <ul class="small"><li><b>EMIT</b>: reflectancia corregida por atmósfera y mineral identificado por Tetracorder (USGS) en dos fechas independientes. Sólo se aceptó un mineral con banda ≥ 0,02; donde las fechas coinciden (68 % de los píxeles en 2 µm, 82 % en 1 µm) el mapa es opaco.</li>
+        <li><b>Química de la mica blanca</b>: posición del mínimo Al-OH (≈2200 nm) con remoción del continuo y ajuste cuadrático, en las dos fechas. Diferencia media entre fechas: 1,1 nm (r = 0,76).</li>
+        <li><b>ASTER</b>: índices SWIR (Al-OH, caolinita, Mg-OH) de 2000 y 2007, y cuarzo, sílice, carbonato y máficos de la emisividad térmica AG100.</li>
+        <li><b>Síntesis</b>: zonas por mineral dominante; la “fílica probable” es mica con banda en el cuartil más profundo (≥ 0,087) y Al-OH en el cuartil más corto (≤ 2204 nm).</li></ul>
+        <h4>¿Funciona acá? Control con depósitos conocidos</h4>
+        <table class="val-tab"><tr><th>Depósito</th><th>S2 OH</th><th>S2 Fe³⁺</th><th>EMIT (300 m)</th></tr>${[['Cerro Canario', 99, 98, 'mica 59 % · caol+mica 24 %'], ['Paramillos Sur', 98, 97, 'caol+mica 53 % · mica 30 %'], ['Paramillos Centro', 83, 93, 'mica 38 % · carbonatos'], ['Oro del Sur', 78, 75, 'mica 70 %'], ['Paramillos Norte', 64, 89, 'carbonatos · esmectita'], ['Vetas Paramillos', 38, 36, 'carbonatos 91 % · Fe²⁺']].map(r => `<tr><td>${r[0]}</td><td class="n ${r[1] >= 90 ? 'hi' : ''}">p${r[1]}</td><td class="n ${r[2] >= 90 ? 'hi' : ''}">p${r[2]}</td><td class="small">${r[3]}</td></tr>`).join('')}</table>
+        <p class="small muted">S2: percentil del valor alto (p90 local, 250 m) respecto de toda el área. EMIT: proporción de píxeles en 300 m. Los pórfiros y el epitermal con alteración expuesta dan mica blanca ± caolinita; las vetas dan su ganga carbonática y los basaltos de caja.</p>
+        <h4>Qué ve EMIT en cada parada</h4>
+        <table class="val-tab"><tr><th>Parada</th><th>2 µm (arcillas, micas)</th><th>1 µm (Fe)</th></tr>${[['2026.1', 'caol+mica 46 % · esmectita 19 %', 'hematita 95 %'], ['2026.2', 'caolinita 21 % · dickita/nacrita 20 %', 'hematita 49 % · goethita 45 %'], ['2026.3', 'caol+mica 33 %', 'hematita 94 %'], ['2026.4', 'calcita+mica 31 % · mica 18 %', 'goethita 72 %'], ['2026.5', 'caolinita 63 % · dickita/nacrita 16 %', 'goethita 56 % · hematita 39 %'], ['2026.6', 'carbonatos 64 % · mica 23 %', 'Fe²⁺ 100 %'], ['2026.7', 'esmectita 37 % · calcita+mica 21 %', 'hematita 70 %']].map(r => `<tr><td>${r[0]}</td><td class="small">${r[1]}</td><td class="small">${r[2]}</td></tr>`).join('')}</table>
+        <p class="small muted">2026.1 y 2026.3: capas rojas. 2026.2 y 2026.5: bordes de los dos sistemas argílicos (B1 y B2–B3); ASTER da cuarzo p95 en 2026.5. 2026.6: basaltos triásicos. Radio de 300 m.</p>
+        <h4>Blancos</h4>
+        ${TELE.blancos.map(b => `<div class="blanco"><div class="blanco-h"><span class="blanco-id"><b>${b.id}</b></span><b>${esc(b.nombre)}</b></div><div class="muted small">${esc(b.cerca)}</div><p>${esc(b.dato)}</p><p><b>Hipótesis:</b> ${esc(b.hip)}</p><p><b>Qué mirar:</b> ${esc(b.ver)}</p><div class="row-btns"><button class="btn sm primary" data-tir="${b.id}">Ir</button><button class="btn sm" data-tver="${b.id}">Ver en mapa</button></div></div>`).join('')}
+        <h4>Trampas</h4><ul class="small">${TELE.trampas.map(t => '<li>' + esc(t) + '</li>').join('')}</ul>
+      </details>
+
       <details class="g-sec"><summary>Cómo anotar mediciones</summary>
         <div class="rmd"><svg viewBox="-60 -60 120 120" width="120" height="120" aria-hidden="true"><circle r="54" class="rmd-c"/><text y="-44" class="rmd-n">N</text><g transform="rotate(30)"><line x1="0" y1="40" x2="0" y2="-40" class="rmd-s"/><path d="M0,-40 l-5,10 h10z" class="rmd-a"/><line x1="0" y1="0" x2="16" y2="0" class="rmd-d"/></g><text x="22" y="16" class="rmd-t">35</text></svg>
         <p><b>Regla de la mano derecha (RMD):</b> el rumbo es el acimut hacia el cual, mirando a lo largo del rumbo, el plano buza a tu derecha. Rumbo = az. de buzamiento − 90°. Ejemplo: 030/35 = buza 35° hacia el 120°.</p></div>
@@ -2648,12 +3614,14 @@ const Guia = {
 
       <details class="g-sec"><summary>Objetivos del viaje</summary><ul>${GUIA.objetivos.map(o => '<li>' + esc(o) + '</li>').join('')}</ul></details>
 
-      <details class="g-sec"><summary>Fuentes</summary><ul class="small"><li>Cátedra PIC I (2026): guía de campo, programa y presentación metodológica.</li><li>Orellano Ricchetti, Winocur y Rubinstein (2017), RAGA 74(2): geología y estructura de las vetas de Paramillos de Uspallata.</li><li>Orellano Ricchetti, tesis doctoral (UBA): estratigrafía y estructura del depocentro Paramillos.</li><li>Carrasquero (2015), tesis doctoral: magmatismo mioceno (Fm. Cerro Redondo).</li><li>Brea, Artabe y Spalletti (2009), RAGA 64(1): bosque de Darwin en Agua de la Zorra.</li></ul></details>`;
+      <details class="g-sec"><summary>Fuentes</summary><ul class="small"><li>Cátedra PIC I (2026): guía de campo, programa y presentación metodológica.</li><li>Orellano Ricchetti, Winocur y Rubinstein (2017), RAGA 74(2): geología y estructura de las vetas de Paramillos de Uspallata.</li><li>Orellano Ricchetti, tesis doctoral (UBA): estratigrafía y estructura del depocentro Paramillos.</li><li>Carrasquero (2015), tesis doctoral: magmatismo mioceno (Fm. Cerro Redondo).</li><li>Brea, Artabe y Spalletti (2009), RAGA 64(1): bosque de Darwin en Agua de la Zorra.</li><li>Datos satelitales: ESA Copernicus (Sentinel-2 L2A); NASA LP DAAC: EMIT L2A RFL, L2A MASK y L2B MIN V001; ASTER AST_07XT y AST_05 V004; ASTER GED AG100 V003. Tetracorder: Clark et al. (2003), USGS.</li></ul></details>`;
     $$('#g-grupo button', root).forEach(b => b.onclick = () => { Settings.set('grupo', b.dataset.g); Mapa.dibujarParadas(); this.render(); });
     $$('[data-ir]', root).forEach(b => b.onclick = () => { Settings.set('destino', 'p:' + b.dataset.ir); const p = Paradas.get(b.dataset.ir); Mapa.irA(p.lat, p.lon, 15); });
     $$('[data-ver]', root).forEach(b => b.onclick = () => { const p = Paradas.get(b.dataset.ver); Mapa.irA(p.lat, p.lon, 16); });
     $$('[data-coord]', root).forEach(b => b.onclick = () => this.coordParada(b.dataset.coord));
     $$('[data-reset]', root).forEach(b => b.onclick = async () => { await Paradas.reset(b.dataset.reset); this.render(); });
+    $$('[data-tir]', root).forEach(b => b.onclick = () => { const t = TELE.blancos.find(x => x.id === b.dataset.tir); TeleMapa.ir(t.lat, t.lon, t.id); Mapa.irA(t.lat, t.lon, 15); });
+    $$('[data-tver]', root).forEach(b => b.onclick = () => { const t = TELE.blancos.find(x => x.id === b.dataset.tver); Settings.set('teleMarcas', true); TeleMapa.aplicar(); Mapa.irA(t.lat, t.lon, 15); });
     $$('[data-chk]', root).forEach(i => i.onchange = async () => { const c = await DB.kvGet('checklist', {}); c[i.dataset.chk] = i.checked; await DB.kvSet('checklist', c); });
   },
   coordParada(id) {
@@ -2697,10 +3665,11 @@ const Ajustes = {
     $('#aj-dec', el).onchange = e => { const v = parseNum(e.target.value); if (isNaN(v) || Math.abs(v) > 30) return toast('Declinación inválida'); Settings.set('declinacion', v); };
     $('#aj-on', el).onchange = e => { Settings.set('pantallaOn', e.target.checked); WakeLock.sync(); };
     $('#aj-exp', el).onclick = () => Exportar.todo().catch(e => { console.error(e); toast('Error al exportar: ' + e.message, 5000); });
-    $('#aj-res', el).onchange = async e => { const f = e.target.files[0]; if (!f) return; try { const n = await Exportar.restaurar(f); toast(n + ' estaciones restauradas'); Libreta.render(); } catch (err) { toast(err.message, 5000); } e.target.value = ''; };
+    $('#aj-res', el).onchange = async e => { const f = e.target.files[0]; if (!f) return; try { const n = await Exportar.restaurar(f); toast(n + ' estaciones restauradas'); Libreta.render(); Columnas.render(); } catch (err) { toast(err.message, 5000); } e.target.value = ''; };
     $('#aj-del', el).onclick = async () => {
-      if (!(await confirmar('Se borran estaciones, mediciones, fotos, croquis, recorridos e importados de este celular. Exportá antes si los necesitás.', 'Borrar todo', true))) return;
-      for (const st of ['estaciones', 'mediciones', 'media', 'recorridos', 'importados']) await DB.clear(st);
+      if (!(await confirmar('Se borran estaciones, mediciones, fotos, croquis, notas de voz, columnas, recorridos e importados de este celular. Exportá antes si los necesitás.', 'Borrar todo', true))) return;
+      for (const st of ['estaciones', 'mediciones', 'media', 'recorridos', 'importados', 'columnas']) await DB.clear(st);
+      Columnas.render();
       document.dispatchEvent(new Event('estaciones')); document.dispatchEvent(new Event('recorrido')); Mapa.dibujarImportados(); Libreta.render(); toast('Datos borrados');
     };
     $('#aj-sw', el).textContent = navigator.serviceWorker?.controller ? 'lista para usar sin conexión ✔' : 'todavía no quedó guardada para usar sin conexión';
@@ -2714,10 +3683,13 @@ const App = {
     Settings.load(); this.tema();
     await DB.open(); await Paradas.load();
     $('#dl-unidades').innerHTML = UNIDADES.map(u => '<option value="' + esc(u) + '">').join('');
+    $('#dl-facies').innerHTML = GUIA.facies.map(f => '<option value="' + esc(f[0]) + '">' + esc(f[1]) + '</option>').join('');
     Mapa.init(); Brujula.init(); Libreta.render(); Guia.render();
     $$('#nav button').forEach(b => b.onclick = () => this.tab(b.dataset.tab));
     $$('[data-ajustes]').forEach(b => b.onclick = () => Ajustes.abrir());
     $('#lib-nueva').onclick = () => Libreta.nueva();
+    $('#col-nueva').onclick = () => Columnas.nueva();
+    Columnas.render();
     $('#lib-exp').onclick = () => Exportar.todo().catch(e => { console.error(e); toast('Error al exportar: ' + e.message, 5000); });
     $('#lib-stereo').onclick = async () => Estereo.hoja(await DB.all('mediciones'), 'Todas las mediciones');
     $('#dest-bruj').onclick = () => { if (Ori.on) Ori.stop(); else Ori.start(); $('#dest-bruj').classList.toggle('on', Ori.on); Mapa.flechaDestino(); };
@@ -2737,6 +3709,7 @@ const App = {
     try { sessionStorage.setItem('pic.tab', name); } catch (e) { }
     if (name === 'mapa') Mapa.mostrar();
     if (name === 'libreta') Libreta.render();
+    if (name === 'columna') Columnas.render();
     if (prev === 'brujula' && name !== 'brujula' && Ori.on && !$('#dest-bruj').classList.contains('on')) Ori.stop();
   },
   tema() {

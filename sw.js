@@ -1,8 +1,8 @@
 /* Service worker · PIC Campo */
-const VERSION = 'd04bbbb8';
+const VERSION = 'a9e7edf3';
 const SHELL = 'pic-app-' + VERSION;
 const TILES = 'pic-teselas-v1';
-const ARCHIVOS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const ARCHIVOS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './relieve.bin', './teledeteccion.bin'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(SHELL).then(c => c.addAll(ARCHIVOS.map(u => new Request(u, { cache: 'reload' })))));

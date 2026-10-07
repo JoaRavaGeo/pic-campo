@@ -1327,16 +1327,17 @@ const VIAJE = {
   docentes: 'Javier Gómez Figueroa (responsable) · José Mescua · Laura León · David Candia',
 };
 
-/* Coordenadas WGS84 del KMZ de la cátedra (opción 2). 2026.0, .8 y .9 figuran en la presentación pero no tienen coordenadas cargadas. */
+/* Coordenadas WGS84 del KMZ de la cátedra (opción 2). 2026.0, .8 y .9 figuran en la presentación pero no tienen coordenadas cargadas.
+   Unidad esperable: Hoja Geológica 3369-09 Uspallata (SEGEMAR 1999, 1:100.000) georreferenciada (±50–150 m), contrastada con Orellano Ricchetti y EMIT. Hay que confirmarla en el afloramiento. */
 const PARADAS_BASE = [
   { id: '2026.0', lat: null, lon: null, unidad: 'Figura en el plan de la presentación pero no en el KMZ. Cargá las coordenadas cuando las tengas.', conf: '' },
-  { id: '2026.1', lat: -32.440083, lon: -69.214167, unidad: 'Gr. Uspallata (¿Fms. Portezuelo Bayo – Los Colorados?) junto a la falla Agua del Jagüel; posible intrusivo de la Fm. Cerro Redondo.', conf: 'baja' },
-  { id: '2026.2', lat: -32.438861, lon: -69.221250, unidad: 'Contacto tectónico Gr. Santa Elena (Paleozoico sup.) / Gr. Uspallata: falla Agua del Jagüel (NE-SO, inclina al NO).', conf: 'baja' },
-  { id: '2026.3', lat: -32.441778, lon: -69.219111, unidad: 'Gr. Uspallata (¿Fms. Portezuelo Bayo – Los Colorados?); posibles intrusivos de la Fm. Cerro Redondo.', conf: 'baja' },
-  { id: '2026.4', lat: -32.463667, lon: -69.237167, unidad: 'Zona de la falla Bonilla (N-S, inclina al E): Gr. Santa Elena (Fm. Agua del Jagüel) al O y Gr. Uspallata al E; cubierta cuaternaria.', conf: 'media' },
-  { id: '2026.5', lat: -32.485861, lon: -69.231833, unidad: 'Gr. Uspallata y basaltos triásicos; intrusivo cenozoico (¿Fm. Cerro Redondo?) al SO; falla N-S.', conf: 'baja' },
-  { id: '2026.6', lat: -32.481889, lon: -69.174778, unidad: 'Fm. Agua de la Zorra y basaltos triásicos (coladas y filones capa), con cubierta cuaternaria.', conf: 'alta' },
-  { id: '2026.7', lat: -32.474639, lon: -69.200444, unidad: 'Fm. Agua de la Zorra en el bloque bajo de la falla Pampa de Canota (capas ~330°/30° RMD).', conf: 'media' },
+  { id: '2026.1', lat: -32.440083, lon: -69.214167, unidad: 'Hoja 3369-09 (1999): gravas de la Fm. Pájaro Muerto (Pleistoceno) sobre una falla inferida NE-SO; Fm. Agua de la Zorra (tobas, tufitas, areniscas, filones de diabasa) a ~250 m al N y Gr. Uspallata indiferenciado a ~300 m al S. EMIT ve capas rojas con hematita: ¿cubierta delgada sobre el Gr. Uspallata?', conf: 'media' },
+  { id: '2026.2', lat: -32.438861, lon: -69.221250, unidad: 'Hoja 3369-09: borde entre la Fm. Pájaro Muerto y la Fm. Agua de la Zorra, sobre la misma falla inferida NE-SO. A ~250 m al NO pasa el corrimiento que monta el Gr. Santa Elena (Fm. Agua del Jagüel) sobre el Triásico: es la falla Agua del Jagüel de Orellano Ricchetti.', conf: 'media' },
+  { id: '2026.3', lat: -32.441778, lon: -69.219111, unidad: 'Hoja 3369-09: Fm. Pájaro Muerto; Gr. Uspallata indiferenciado a ~150 m al S, en contacto por falla con la Fm. Puesto Uno (brechas andesíticas y andesitas neógenas) más al S.', conf: 'media' },
+  { id: '2026.4', lat: -32.463667, lon: -69.237167, unidad: 'Hoja 3369-09: borde E de un afloramiento del Gr. Santa Elena (Fm. Agua del Jagüel: diamictitas, areniscas y pelitas) rodeado de aluvio. Coincide con la zona de la falla Bonilla (N-S, inclina al E) de Orellano Ricchetti.', conf: 'alta' },
+  { id: '2026.5', lat: -32.485861, lon: -69.231833, unidad: 'Hoja 3369-09: Fm. Agua de la Zorra junto a una falla N-S que la pone en contacto con el Gr. Uspallata indiferenciado al O; ejes de anticlinal N-S y NO-SE; Gr. Santa Elena a ~300 m al SO. No hay intrusivo mapeado en la parada.', conf: 'media' },
+  { id: '2026.6', lat: -32.481889, lon: -69.174778, unidad: 'La Hoja 3369-09 coincide con la interpretación previa (Orellano et al. 2017): Fm. Agua de la Zorra con basaltos triásicos (coladas y filones capa); Fm. Portezuelo Bayo a ~250 m al O y gravas de la Fm. Pájaro Muerto al N.', conf: 'alta' },
+  { id: '2026.7', lat: -32.474639, lon: -69.200444, unidad: 'Discrepancia a resolver en el campo: la Hoja 3369-09 marca aluvio en la punta de un afloramiento de la Fm. Los Colorados, con Fm. Portezuelo Bayo al E; la interpretación previa (basada en Orellano Ricchetti) la ubica en la Fm. Agua de la Zorra, en el bloque bajo de la falla Pampa de Canota (capas ~330°/30° RMD). EMIT ve capas rojas con hematita.', conf: 'baja' },
   { id: '2026.8', lat: null, lon: null, unidad: 'Figura en el plan de la presentación pero no en el KMZ. Cargá las coordenadas cuando las tengas.', conf: '' },
   { id: '2026.9', lat: null, lon: null, unidad: 'Figura en el plan de la presentación pero no en el KMZ. Cargá las coordenadas cuando las tengas.', conf: '' },
 ];
@@ -1738,6 +1739,7 @@ const TILE_URL = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Ima
 const TILE_CACHE = 'pic-teselas-v1';
 const PRESETS = {
   brea: { nombre: 'Brea et al. 2009 · Fig. 3', bounds: [[-32.499734, -69.244102], [-32.377705, -69.048014]], opacity: 0.55, nota: 'Mapa esquemático regional. Georreferencia aproximada (±0,5–1 km): usalo para orientarte, no para ubicar contactos.' },
+  hoja: { nombre: 'Hoja Geológica 3369-09 Uspallata (SEGEMAR 1999)', bounds: [[-32.569923, -69.3], [-32.36, -69.020057]], opacity: 0.6, nota: 'Escala 1:100.000. Georreferenciada con su grilla Gauss-Krüger (datum Campo Inchauspe): error de ubicación ~50–150 m, más la precisión propia de un mapa 1:100.000. Es de 1999: verificá unidades y contactos en el campo.' },
   orellano: { nombre: 'Orellano Ricchetti et al. 2017 · Fig. 1a', bounds: [[-32.497571, -69.173164], [-32.467374, -69.12224]], opacity: 0.7, nota: 'Georreferenciado con las marcas 69°09′ / 32°29′ y la escala gráfica (error estimado ~100 m). Cubre el sector de las vetas, al este de 2026.6.' },
 };
 
@@ -2027,10 +2029,10 @@ const Mapa = {
   },
   async agregarCapa(file, rerender) {
     const nom = file.name.toLowerCase();
-    const preset = nom.includes('brea') ? 'brea' : nom.includes('orellano') ? 'orellano' : '';
+    const preset = nom.includes('brea') ? 'brea' : nom.includes('orellano') ? 'orellano' : (nom.includes('3369') || nom.includes('segemar') || nom.includes('hoja')) ? 'hoja' : '';
     const f = Settings.get('formato') === 'gk' ? 'gk' : Settings.get('formato') === 'utm' ? 'utm' : 'dd';
     const s = Sheet.open(`<div class="sheet-body"><h3>Ubicar el mapa</h3><p class="muted small">${esc(file.name)}</p>
-      <label class="fld"><span>Georreferencia</span><select id="ac-pre"><option value="brea">Brea et al. 2009 · Fig. 3</option><option value="orellano">Orellano Ricchetti et al. 2017 · Fig. 1a</option><option value="custom">Otra imagen: ingresar esquinas</option></select></label>
+      <label class="fld"><span>Georreferencia</span><select id="ac-pre"><option value="hoja">Hoja Geológica 3369-09 Uspallata (SEGEMAR 1999)</option><option value="brea">Brea et al. 2009 · Fig. 3</option><option value="orellano">Orellano Ricchetti et al. 2017 · Fig. 1a</option><option value="custom">Otra imagen: ingresar esquinas</option></select></label>
       <div id="ac-custom" hidden>
         <p class="muted small">Imagen con el norte arriba. Ingresá las coordenadas de los bordes (en QGIS: Proyecto → Importar/Exportar → Exportar mapa a imagen muestra la extensión).</p>
         <label class="fld"><span>Sistema</span><select id="ac-f"><option value="utm">UTM 19S (m)</option><option value="gk">Gauss-Krüger faja 2 (m)</option><option value="dd">Lat/Lon decimal</option></select></label>
@@ -2203,39 +2205,40 @@ const TELE = {
   ],
   blancos: [
     { id: 'B1', nombre: 'Núcleo de dickita/nacrita al NNE de 2026.1', lat: -32.431357, lon: -69.209597, cerca: '≈ 1,1 km al NNE de 2026.1 · 1,4 km al NE de 2026.2',
-      dato: 'EMIT identifica caolín bien cristalizado del tipo dickita/nacrita (72 % en 300 m) en un cuerpo de 54 ha. Sale igual en las dos fechas (81 % de los píxeles coinciden) y con banda profunda (~0,10). El espectro tiene un doblete en 2,17–2,21 µm más chato que el de la caolinita de B2. Alrededor hay caolinita + mica y mica blanca. ASTER: Al-OH p89, cuarzo moderado (p58). Es la faja NE-SO que ya marcaba Sentinel-2 (en esta zona el KMZ de la cátedra marca un cuerpo alargado NE-SO). La faja sigue 650 m al OSO y hay manchas de 2–8 ha a 200–330 m de 2026.2.',
-      hip: 'La dickita y la nacrita se forman con fluidos hidrotermales ácidos más calientes que los que dan caolinita común (o por diagénesis profunda); la meteorización no las produce. Si se confirma: alteración argílica avanzada hipogénica ligada a un intrusivo de la Fm. Cerro Redondo o a la falla Agua del Jagüel. Alternativa: mezcla fina de caolinita y mica, que también aplana el doblete. No hay alunita ni pirofilita a escala de 60 m.',
-      ver: 'Roca blanca, deleznable o silicificada; caolín blanco ceroso en venillas y fracturas; cuarzo oqueroso o sílice; óxidos en boxwork. Llevá muestra para DRX o espectrómetro portátil (es la única forma de separar dickita de caolinita). No debería efervescer con HCl.' },
+      dato: 'EMIT identifica caolín bien cristalizado del tipo dickita/nacrita (72 % en 300 m) en un cuerpo de 54 ha. Sale igual en las dos fechas (81 % de los píxeles coinciden) y con banda profunda (~0,10). El espectro tiene un doblete en 2,17–2,21 µm más chato que el de la caolinita de B2. Alrededor hay caolinita + mica y mica blanca. ASTER: Al-OH p89, cuarzo moderado (p58). Es la faja NE-SO que ya marcaba Sentinel-2. La Hoja 3369-09 (SEGEMAR 1999) ubica el cuerpo en la Fm. Agua de la Zorra (tobas, tufitas, areniscas, pelitas y filones de diabasa), con capas casi verticales de rumbo NE (89°); su borde SE coincide con una falla inferida NE-SO y otra falla NE-SO cruza su extremo NE. El núcleo forma una loma ~110 m sobre el valle. Hay manchas de 2–8 ha a 200–330 m de 2026.2.',
+      hip: 'La dickita y la nacrita se forman con fluidos hidrotermales ácidos más calientes que los que dan caolinita común (o por diagénesis profunda); la meteorización no las produce. Si se confirma: alteración argílica avanzada hipogénica canalizada por la falla NE-SO y ligada al magmatismo de la Fm. Cerro Redondo (no hay intrusivo mapeado en B1; el más cercano está ~1,5 km al ENE). Alternativas: dickita diagenética en las tobas triásicas, o mezcla fina de caolinita y mica, que también aplana el doblete. No hay alunita ni pirofilita a escala de 60 m.',
+      ver: 'Como las capas también corren NE-SO, la forma alargada no alcanza: mirá si la alteración corta capas y sigue la falla, o si se queda en ciertos bancos de toba. Roca blanca, deleznable o silicificada; caolín blanco ceroso en venillas y fracturas; cuarzo oqueroso o sílice; óxidos en boxwork. Llevá muestra para DRX: dickita 3,95 y 3,79 Å, caolinita 3,84 y 3,73 Å. No debería efervescer con HCl.' },
     { id: 'B2', nombre: 'Cuerpo de caolinita al O de 2026.5', lat: -32.487815, lon: -69.240199, cerca: '≈ 0,8 km al O de 2026.5',
-      dato: 'EMIT: 99 % caolinita (tipo mal cristalizada) con banda muy profunda (~0,25). Es parte de un cuerpo de ~207 ha que incluye B3 y 2026.5. ASTER térmico: cuarzo p95 y máficos bajos (p16), o sea una roca félsica rica en sílice. Sentinel-2 ya lo marcaba (>p97). Está sobre una loma, no en un barreal.',
-      hip: 'Alteración argílica sobre roca félsica rica en cuarzo (intrusivo cenozoico o tobas ácidas del Gr. Choiyoi). La caolinita mal cristalizada sin dickita ni alunita puede venir de argílica hidrotermal de baja temperatura o de caolinización supergénica o meteórica de una roca rica en feldespato. EMIT no detecta yeso.',
+      dato: 'EMIT: 99 % caolinita (tipo mal cristalizada) con banda muy profunda (~0,25). Es parte de un cuerpo de ~207 ha que incluye B3 y 2026.5. ASTER térmico: cuarzo p95 y máficos bajos (p16), o sea una roca félsica rica en sílice. Sentinel-2 ya lo marcaba (>p97). Está sobre una loma, no en un barreal. La Hoja 3369-09 lo ubica en el Gr. Uspallata indiferenciado, junto a un anticlinal N-S y una falla N-S que lo separa de la Fm. Agua de la Zorra; no hay intrusivo mapeado.',
+      hip: 'Caolinización de rocas félsicas ricas en cuarzo del Gr. Uspallata (probablemente tobas), o de un intrusivo no mapeado. La caolinita mal cristalizada sin dickita ni alunita puede venir de argílica hidrotermal de baja temperatura o de caolinización supergénica o meteórica de una roca rica en feldespato. EMIT no detecta yeso.',
       ver: 'Porfírica con feldespatos reemplazados por caolín → alteración; toba con trizas y pómez → litológico. Buscá cuarzo de vena o sílice, pirita u óxidos en boxwork. Fijate si la caolinita sigue fracturas (hidrotermal) o es pervasiva y sólo superficial (meteorización).' },
     { id: 'B3', nombre: 'Borde E del cuerpo de caolinita (junto a 2026.5)', lat: -32.487594, lon: -69.228667, cerca: '≈ 350 m al SE de 2026.5',
       dato: 'EMIT: 94 % caolinita, con goethita y poca hematita. En 2026.5 aparece además dickita/nacrita (16 %) en manchas de ~2 ha a 100–270 m de la parada. ASTER: cuarzo p87, Al-OH p86.',
-      hip: 'Borde del mismo sistema que B2. La dickita local junto a 2026.5 podría marcar el conducto más caliente (falla N-S o dique).',
+      hip: 'Borde del mismo sistema que B2. Según la Hoja 3369-09 está en la Fm. Agua de la Zorra, al E de la falla N-S y sobre un eje de anticlinal NO-SE. La dickita local junto a 2026.5 podría marcar el conducto más caliente a lo largo de esa falla.',
       ver: 'Contacto entre la roca clara y los basaltos o el Gr. Uspallata: ¿intrusivo?, ¿halo de alteración?, ¿falla N-S? Muestreá un perfil corto de la roca clara a la caja, cada 20–50 m, para ver si cambia la mineralogía.' },
     { id: 'B4', nombre: 'Capas rojas entre 2026.1 y 2026.3', lat: -32.442028, lon: -69.215381, cerca: '≈ 250 m al SSO de 2026.1',
-      dato: 'EMIT: hematita 100 % con caolinita+mica y esmectita; ASTER cuarzo bajo (p32). La misma firma dan 2026.1 (hematita 95 %) y 2026.3 (94 %).',
+      dato: 'EMIT: hematita 100 % con caolinita+mica y esmectita; ASTER cuarzo bajo (p32). La misma firma dan 2026.1 (hematita 95 %) y 2026.3 (94 %). La Hoja 3369-09 marca gravas de la Fm. Pájaro Muerto con el Gr. Uspallata a ~100 m al S: la hematita puede venir de la roca o de clastos rojos en las gravas.',
       hip: 'Muy probablemente litológico: areniscas y pelitas rojas del Gr. Uspallata con hematita y arcillas detríticas. La falta de jarosita y goethita y la presencia de esmectita lo favorecen.',
       ver: 'Estratificación, laminación y granulometría → litológico. Sirve de control negativo: anotá cómo se ve en el campo una anomalía de hematita que no es alteración.' },
-    { id: 'B5', nombre: 'Mica blanca rica en Al al NNO (fuera del recorrido)', lat: -32.417457, lon: -69.231104, cerca: '≈ 2,5 km al NNO de 2026.2',
-      dato: 'EMIT: 82–94 % mica blanca con Al-OH en ~2202 nm (de las más cortas del área) y banda profunda (0,11–0,13), en un cuerpo de 46 ha que se repite en las dos fechas (98 %). ASTER: Mg-OH p90.',
-      hip: 'Sericita o muscovita bien desarrollada: alteración fílica, o micas metamórficas o detríticas del Gr. Santa Elena (queda al NO de la falla Agua del Jagüel). La espectroscopía sola no las separa; decide la textura.',
-      ver: 'Sólo si hay tiempo. Sericita fina que reemplaza feldespatos, con pirita o boxwork y venillas de cuarzo → fílica. Esquistosidad o micas en planos de estratificación de sedimentitas paleozoicas → litológico.' },
+    { id: 'B5', nombre: 'Mica rica en Al sobre un intrusivo de la Fm. Cerro Redondo (fuera del recorrido)', lat: -32.417457, lon: -69.231104, cerca: '≈ 2,5 km al NNO de 2026.2',
+      dato: 'EMIT: 82–94 % mica blanca con Al-OH en ~2202 nm (de las más cortas del área) y banda profunda (0,11–0,13), en un cuerpo de 46 ha que se repite en las dos fechas (98 %). ASTER: Mg-OH p90. La Hoja 3369-09 ubica el punto sobre un cuerpo subvolcánico de la Fm. Cerro Redondo (andesita-dacita miocena) dentro del Gr. Santa Elena.',
+      hip: 'Sericita o muscovita bien desarrollada sobre un intrusivo mioceno: alteración fílica, como la de los pórfiros del distrito. Es el segundo blanco más interesante después de B1. Alternativa: micas del Gr. Santa Elena en el borde del cuerpo (error de ubicación ~100 m).',
+      ver: 'Sólo si hay tiempo. Roca porfírica con feldespatos reemplazados por sericita, pirita o boxwork y venillas de cuarzo → fílica; si además hay biotita secundaria o magnetita (imán), estarías cerca de un núcleo potásico. Si es sedimentita con micas en planos → litológico.' },
     { id: 'B6', nombre: 'Mica + hematita al O de 2026.4 (fuera del recorrido)', lat: -32.468911, lon: -69.263084, cerca: '≈ 2,5 km al OSO de 2026.4',
       dato: 'EMIT: 97 % mica blanca rica en Al (2202 nm, banda 0,12) junto con 97 % hematita, en un cuerpo de 32 ha igual en las dos fechas. ASTER: cuarzo p76.',
-      hip: 'Probablemente litológico: está al O de la falla Bonilla, en el Gr. Santa Elena; la mica detrítica con hematita es típica de sedimentitas rojas. Alternativa: halo fílico con hematita por oxidación de pirita.',
+      hip: 'La Hoja 3369-09 lo ubica en la Fm. Tunduqueral (miembro inferior: basaltos alcalinos y tobas), junto a la Fm. Tambillos (tobas ácidas del Gr. Choiyoi). Mica rica en Al con hematita en tobas: puede ser sericitización de las tobas (diagénesis o alteración) o un halo fílico con hematita por oxidación de pirita.',
       ver: 'Prioridad baja. Si pasás cerca: estratificación con mica en planos (litológico) o roca ígnea sericitizada con boxwork (alteración).' },
   ],
   trampas: [
     'Sentinel-2 B11/B12 sube con cualquier mineral con OH o carbonato (sericita, caolinita, esmectitas, clorita, epidoto, micas de la Fm. Villavicencio y del Gr. Santa Elena, caliche, calcita, yeso). EMIT sí los separa.',
     'EMIT da el mineral con la banda más fuerte en cada píxel de 60 m (3600 m²). Una mezcla de rocas aparece como un solo mineral. Lo translúcido en el mapa es una sola fecha o fechas que no coinciden: tomalo con cautela.',
     'Dickita/nacrita se separan de la caolinita por la forma del doblete en 2,16–2,21 µm. Con el ruido de EMIT es una identificación probable, que hay que confirmar con DRX o con un espectrómetro de campo.',
-    'La mica blanca no distingue sericita hidrotermal de micas metamórficas o detríticas (Gr. Santa Elena, Fm. Villavicencio). Al O de las fallas Agua del Jagüel y Bonilla, la mica rica en Al es sospechosa de ser litológica.',
+    'La mica blanca no distingue sericita hidrotermal de micas metamórficas o detríticas (Gr. Santa Elena, Fm. Villavicencio, filitas del Gr. Bonilla). Compará siempre con la unidad de la Hoja 3369-09.',
     'Carbonatos (EMIT) salen en el caliche, la ganga de las vetas y los basaltos alterados: no indican alteración por sí solos.',
     'La hematita de las capas rojas (Fms. Los Colorados y Agua de la Zorra) da la misma señal que la de una zona oxidada. El Fe²⁺ marca los basaltos triásicos y los carbonatos ferrosos: es litológico o de ganga.',
     'ASTER cuarzo (AG100) es un promedio de 2000–2008 a ~100 m. Marca sílice libre: silicificación, venas de cuarzo, areniscas cuarzosas o riolitas por igual.',
     'Ni alunita ni pirofilita aparecen en las dos fechas de EMIT: no hay argílica avanzada de alta sulfuración expuesta a escala de 60 m.',
+    'La Hoja 3369-09 es de 1999 y 1:100.000: sus contactos pueden estar corridos 100 m o más y algunas unidades fueron redefinidas después (por ejemplo en 2026.7). Usala como guía, no como verdad.',
     'Estructuras de menos de ~40 m (S2) o ~120 m (EMIT) de ancho, como vetas y diques finos, no se ven. Vegetación y sombras fuertes quedan enmascaradas.',
   ],
   async cargar() {
@@ -3577,7 +3580,7 @@ const Guia = {
       </details>
 
       <details class="g-sec" open><summary>Paradas</summary>${Paradas.list.map(parada).join('')}
-        <p class="muted small">La unidad esperable es una interpretación preliminar a partir de los mapas publicados: confirmala en el afloramiento.</p></details>
+        <p class="muted small">La unidad esperable sale de la Hoja Geológica 3369-09 Uspallata (SEGEMAR 1999), contrastada con Orellano Ricchetti y con EMIT. Es un mapa 1:100.000 de 1999: confirmala en el afloramiento.</p></details>
 
       <details class="g-sec"><summary>Unidades (de más joven a más vieja)</summary><div class="col-strat">${GUIA.unidades.map((u, i) => `<div class="u u${i}"><div class="u-n">${esc(u.n)}</div><div class="u-e">${esc(u.e)}</div><p>${esc(u.d)}</p></div>`).join('')}</div></details>
 
@@ -3614,7 +3617,7 @@ const Guia = {
 
       <details class="g-sec"><summary>Objetivos del viaje</summary><ul>${GUIA.objetivos.map(o => '<li>' + esc(o) + '</li>').join('')}</ul></details>
 
-      <details class="g-sec"><summary>Fuentes</summary><ul class="small"><li>Cátedra PIC I (2026): guía de campo, programa y presentación metodológica.</li><li>Orellano Ricchetti, Winocur y Rubinstein (2017), RAGA 74(2): geología y estructura de las vetas de Paramillos de Uspallata.</li><li>Orellano Ricchetti, tesis doctoral (UBA): estratigrafía y estructura del depocentro Paramillos.</li><li>Carrasquero (2015), tesis doctoral: magmatismo mioceno (Fm. Cerro Redondo).</li><li>Brea, Artabe y Spalletti (2009), RAGA 64(1): bosque de Darwin en Agua de la Zorra.</li><li>Datos satelitales: ESA Copernicus (Sentinel-2 L2A); NASA LP DAAC: EMIT L2A RFL, L2A MASK y L2B MIN V001; ASTER AST_07XT y AST_05 V004; ASTER GED AG100 V003. Tetracorder: Clark et al. (2003), USGS.</li></ul></details>`;
+      <details class="g-sec"><summary>Fuentes</summary><ul class="small"><li>Cátedra PIC I (2026): guía de campo, programa y presentación metodológica.</li><li>Orellano Ricchetti, Winocur y Rubinstein (2017), RAGA 74(2): geología y estructura de las vetas de Paramillos de Uspallata.</li><li>Orellano Ricchetti, tesis doctoral (UBA): estratigrafía y estructura del depocentro Paramillos.</li><li>Carrasquero (2015), tesis doctoral: magmatismo mioceno (Fm. Cerro Redondo).</li><li>Brea, Artabe y Spalletti (2009), RAGA 64(1): bosque de Darwin en Agua de la Zorra.</li><li>SEGEMAR (1999): Carta Geológica de la República Argentina 1:100.000, Hoja 3369-09 Uspallata.</li><li>Datos satelitales: ESA Copernicus (Sentinel-2 L2A); NASA LP DAAC: EMIT L2A RFL, L2A MASK y L2B MIN V001; ASTER AST_07XT y AST_05 V004; ASTER GED AG100 V003. Tetracorder: Clark et al. (2003), USGS.</li></ul></details>`;
     $$('#g-grupo button', root).forEach(b => b.onclick = () => { Settings.set('grupo', b.dataset.g); Mapa.dibujarParadas(); this.render(); });
     $$('[data-ir]', root).forEach(b => b.onclick = () => { Settings.set('destino', 'p:' + b.dataset.ir); const p = Paradas.get(b.dataset.ir); Mapa.irA(p.lat, p.lon, 15); });
     $$('[data-ver]', root).forEach(b => b.onclick = () => { const p = Paradas.get(b.dataset.ver); Mapa.irA(p.lat, p.lon, 16); });
